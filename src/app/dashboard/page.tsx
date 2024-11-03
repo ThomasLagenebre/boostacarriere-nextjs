@@ -7,15 +7,15 @@ import ItemCard from './_components/ItemCard';
 export default function page() {
   const today = new Date().toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   return (
-    <div className='w-5/6 py-6 px-4'>
-      <DashboardSection>
+    <div className='lg:w-5/6 lg:py-6 px-4'>
+      <DashboardSection className='mt-0'>
         <p className='font-bold'>Nous sommes le {today}</p>
       </DashboardSection>
       <DashboardSection>
         <SectionTitle title='Nombre de ventes réalisés'/>
         <Chart />
       </DashboardSection>
-      <div className='grid grid-cols-2 gap-6'>
+      <div className='grid lg:grid-cols-2 gap-6'>
         <DashboardSection>
           <SectionTitle title='Les prochains coachings'/>
           <ItemCard type='Appointment' appointment='Le vendredi 25 octobre 2024 à 18H30' img='https://firebasestorage.googleapis.com/v0/b/boostacarriere-2679a.appspot.com/o/files%2Fboost-ton-salaire.png?alt=media&token=a93fe947-87cb-4df8-ae8e-b91fe8602d08' username="Axel Constance" link='/dashboard' />

@@ -8,11 +8,12 @@ import ImgModule from './_modulesForm/ImgModule';
 import PriceModule from './_modulesForm/PriceModule';
 import CurrentProblemsModule from './_modulesForm/CurrentProblemsModule';
 import GainsModule from './_modulesForm/GainsModule';
+import ContentModule from './_modulesForm/ContentModule';
 
 export default function page() {
 
   return (
-    <div className='w-5/6'>
+    <div className='max-lg:px-4'>
         <DashboardSection>
             <SectionTitle title='TITRE : Négocie ton salaire efficacement' className='text-left'/>
         </DashboardSection>
@@ -22,6 +23,7 @@ export default function page() {
             <PriceModule />
             <CurrentProblemsModule />
             <GainsModule />
+            <ContentModule />
         </form>
     </div>
         
