@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import {  Navigation } from 'swiper/modules'
 import 'swiper/swiper-bundle.css';
 import "swiper/css";
+import allEbooks from '../_data/allEbooks';
 
 export default function Ebooks() {
   return (
@@ -36,25 +37,11 @@ export default function Ebooks() {
               },
             }}
           >
-
-          <SwiperSlide>
-            <EbooksCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <EbooksCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <EbooksCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <EbooksCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <EbooksCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <EbooksCard />
-          </SwiperSlide>
+            {allEbooks.map((ebook) => (
+              <SwiperSlide key={ebook.id}>
+                <EbooksCard title={ebook.title} rate={ebook.rate} price={parseInt(ebook.price)} img={ebook.picture} promotion={ebook.promotion}/>
+              </SwiperSlide>
+            ))}
         </Swiper>
     </section>
   )

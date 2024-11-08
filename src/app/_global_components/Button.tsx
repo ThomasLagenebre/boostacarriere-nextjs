@@ -17,7 +17,7 @@ export default function Button({ type, children, style, className, onClick, link
     bgStyle = 'bg-white  text-secondary ';
       break;
     case 'secondary':
-      bgStyle = 'bg-secondary text-primary border border-transparent hover:bg-transparent hover:border-secondary';
+      bgStyle = 'bg-secondary text-white border border-transparent hover:bg-transparent hover:border-secondary';
       break;
     case 'primary':
       bgStyle = 'bg-primary text-secondary border border-transparent hover:bg-transparent hover:border-primary';

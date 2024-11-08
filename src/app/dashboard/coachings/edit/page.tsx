@@ -1,14 +1,14 @@
 'use client';
 import SectionTitle from '@/app/(landing)/prestations/_components/SectionTitle'
-import React, { useState } from 'react'
+import React from 'react'
 import DashboardSection from '../../_components/DashboardSection'
-import { CiSquareMinus, CiSquarePlus } from 'react-icons/ci';
 import GeneralModule from './_modulesForm/GeneralModule';
 import ImgModule from './_modulesForm/ImgModule';
 import PriceModule from './_modulesForm/PriceModule';
 import CurrentProblemsModule from './_modulesForm/CurrentProblemsModule';
 import GainsModule from './_modulesForm/GainsModule';
 import ContentModule from './_modulesForm/ContentModule';
+import ImagesList from './_components/ImagesList';
 
 export default function page() {
 
@@ -18,6 +18,7 @@ export default function page() {
             <SectionTitle title='TITRE : Négocie ton salaire efficacement' className='text-left'/>
         </DashboardSection>
         <form className='my-6'>
+            <ImagesList />
             <GeneralModule />
             <ImgModule />
             <PriceModule />

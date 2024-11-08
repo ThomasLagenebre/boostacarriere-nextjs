@@ -33,6 +33,7 @@ function Header() {
           <NavLink onClick={() => setIsOpen(false)} link='/'>Accueil</NavLink>
           <NavLink onClick={() => setIsOpen(false)} link='/prestations'>Prestations</NavLink>
           <NavLink onClick={() => setIsOpen(false)} link='/'>Blog</NavLink>
+          <NavLink onClick={() => setIsOpen(false)} link='/'>Entreprise</NavLink>
           <NavLink onClick={() => setIsOpen(false)} link='/'>À propos</NavLink>
           <hr></hr>
           <li className='lg:hidden'><Link href='/login'>Se connecter</Link></li>
