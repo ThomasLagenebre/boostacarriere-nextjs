@@ -1,6 +1,8 @@
 export interface ISettings {
     home : {
-
+        slogan : string,
+        description: string,
+        cta: string
     },
     social:{
         followersInsta: number,

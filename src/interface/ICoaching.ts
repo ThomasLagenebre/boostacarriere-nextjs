@@ -9,13 +9,20 @@ export interface ICoaching {
     price: string
     isActive: boolean
     slug: string
-    promotion: number
+    coach?: {
+      name: string,
+      description: string,
+      nbOfCoachings: number
+    }
+    promotion?: number
+    limitPromotion?: string
     category: Category
     currentProblems: CurrentProblem[]
     gains: Gain[]
     includes: Include[]
+    targets?: string[]
     numberOfReviews: number
-    reviews: any[]
+    reviews: string[]
   }
   
   export interface Category {
@@ -29,6 +36,7 @@ export interface ICoaching {
   
   export interface Gain {
     gain: string
+
   }
   
   export interface Include {

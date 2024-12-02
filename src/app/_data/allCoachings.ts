@@ -9,11 +9,17 @@ const allCoachings:ICoaching[] =
             "picture": "https://firebasestorage.googleapis.com/v0/b/boostacarriere-2679a.appspot.com/o/files%2Freussi-ton-entretien-embauche.jpg?alt=media&token=6dde4799-f3c7-40a7-8808-bbf514ceb138",
             "summary": null,
             "description": "Le succès de ton prochain entretien d'embauche est ma priorité ! Tu souhaites te démarquer parmi les candidats et décrocher le poste de tes rêves ? Ce service est conçu pour toi. L’objectif est de te préparer à exceller et à réussir cette étape déterminante. Cela te permettra également de gagner en temps, d'accélérer ton développement professionnel et d'éviter les doutes pour te présenter avec assurance lors de ton entretien.",
-            "rate": null,
-            "price": "80.00",
+            "rate": 2.3,
+            "price": "8000",
             "isActive": true,
             "slug": "reussi-ton-entretien-dembauche",
-            "promotion": 0,
+            "promotion": 50,
+            "coach": {
+                "name": "Laurine JANCZAK",
+                "description": "RH depuis 5 ans & fondatrice de Boostacarriere",
+                "nbOfCoachings": 50
+            },
+            "limitPromotion" : "01/12/20" ,
             "category": {
                 "id": 1,
                 "name": "Coaching"
@@ -76,8 +82,13 @@ const allCoachings:ICoaching[] =
                     "icon": "Mail"
                 }
             ],
+            "targets": [
+                "Tu n'as jamais passé d'entretien d'embauche"
+            ],
             "numberOfReviews": 0,
-            "reviews": []
+            "reviews": [
+                "Ceci est un test"
+            ]
         },
         {
             "id": 4,
@@ -87,10 +98,11 @@ const allCoachings:ICoaching[] =
             "summary": null,
             "description": "Ton talent et tes compétences méritent une juste récompense. Tu aspires à un salaire à la hauteur de ta valeur et de ta contribution à l'entreprise ? La négociation salariale peut sembler intimidante, mais ne t'inquiète pas, je suis là pour te guider et te permettre d'atteindre tes objectifs financiers et professionnels.",
             "rate": null,
-            "price": "80.00",
+            "price": "8000",
             "isActive": true,
             "slug": "negocie-ton-salaire-efficacement",
-            "promotion": 0,
+            "promotion": 10,
+            "limitPromotion": "10/11/2024",
             "category": {
                 "id": 1,
                 "name": "Coaching"

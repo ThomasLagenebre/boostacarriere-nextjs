@@ -1,7 +1,7 @@
 import StarsRate from '@/app/_global_components/StarsRate'
 import React from 'react'
 
-export default function RateStats({rate, nbOfRates}: {rate: number, nbOfRates: string}) {
+export default function RateStats({rate, nbOfRates}: {rate: number, nbOfRates: number}) {
     
   return (
     <div className='flex items-center gap-3 mt-6'>

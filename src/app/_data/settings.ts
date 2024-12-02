@@ -2,7 +2,9 @@ import { ISettings } from "@/interface/ISettings";
 
 const textSettings: ISettings = {
     home: {
-
+        slogan: "Améliore ton train de vie en nourissant ton potentiel",
+        description : "De la rédaction du CV à la demande de rupture conventionnelle, je t'accompagne avec des <primary>stratégies efficaces</primary> pour transformer ou développer <primary>ta carrière</primary>",
+        cta: "Booster ma carrière"
     },
     social: {
         followersInsta: 5,
