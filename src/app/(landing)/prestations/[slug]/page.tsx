@@ -11,37 +11,64 @@ import Coach from '../_sections/Coach'
 import Pack from '../_sections/Pack'
 import Summary from '../_sections/Summary'
 import Plan from '../_sections/Plan'
-import allCoachings from '@/app/_data/allCoachings'
+import { fetchCoachingBySlug } from '@/app/_data/fetchCoachingBySlug'
+import { notFound } from 'next/navigation'
 
-export default async function page({params}: {
-  params: Promise<{ slug: string }>
-}) {
-  const slug = (await params).slug;
-  const currentProduct = allCoachings.find((coaching) => coaching.slug === slug);
+export default async function Page({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   
-  return (
-    <main className='mx-auto max-w-screen-xl max-xl:px-2'>
-      {currentProduct && (
-        <>
-          <Hero title={currentProduct.title} category={currentProduct.category} description={currentProduct.description} rate={currentProduct.rate} img={currentProduct.picture} price={parseInt(currentProduct.price)} promotion={currentProduct.promotion} limitPromotion={currentProduct.limitPromotion} includes={currentProduct.includes} reviews={currentProduct.reviews}/>
-          <div className=' xl:max-w-[800px]'>
-              {currentProduct.currentProblems && <CurrentProblems currentProblems={currentProduct.currentProblems}/>}
-              
-              <Reviews />
-              {currentProduct.gains && <Gains gains={currentProduct.gains} />}
-              {currentProduct.category.name === "Ebook" && <Summary />}
-              <Description />
-              {currentProduct.category.name === "Formation" && <Plan />}
-              {currentProduct.targets && <Targets targets={currentProduct.targets}/>}
-              {allCoachings.length > 1 && <Suggestions suggestions={allCoachings.filter((coaching) => coaching.id !== currentProduct.id)}/>}
-              {currentProduct.category.name === "Coaching" && <Coach coach={currentProduct.coach}/>}
-              
-              <Pack />
-          </div>
-          <ScrollUp />
-        </>
-    )}
-      
-    </main>
-  )
+
+  try {
+    
+    const currentProduct = await fetchCoachingBySlug(slug);
+    
+    if (!currentProduct) {
+      return (
+        <main className="mx-auto max-w-screen-xl max-xl:px-2">
+          <p>Produit non trouvé.</p>
+        </main>
+      );
+    }
+
+    
+
+    return (
+      <main className="mx-auto max-w-screen-xl max-xl:px-2">
+        <Hero
+          title={currentProduct.title}
+          category={currentProduct.category}
+          description={currentProduct.description}
+          rate={currentProduct.rate}
+          img={currentProduct.picture}
+          price={parseInt(currentProduct.price)}
+          promotion={currentProduct.promotion}
+          limitPromotion={currentProduct.limitPromotion}
+          includes={currentProduct.includes}
+          reviews={currentProduct.reviews}
+        />
+        <div className="xl:max-w-[800px]">
+          {currentProduct.currentProblems && (
+            <CurrentProblems currentProblems={currentProduct.currentProblems} />
+          )}
+          <Reviews />
+          {currentProduct.gains && <Gains gains={currentProduct.gains} />}
+          {currentProduct.category.name === 'Ebook' && <Summary />}
+          <Description />
+          {currentProduct.category.name === 'Formation' && <Plan />}
+          {currentProduct.targets && <Targets targets={currentProduct.targets} />}
+          {currentProduct.suggestions && (
+            <Suggestions suggestions={currentProduct.suggestions} />
+          )}
+          {currentProduct.category.name === 'Coaching' && (
+            <Coach coach={currentProduct.coach} />
+          )}
+          {/* <Pack /> */}
+        </div>
+        <ScrollUp />
+      </main>
+    );
+  } catch (error) {
+    console.error(error);
+    return notFound()
+  }
 }

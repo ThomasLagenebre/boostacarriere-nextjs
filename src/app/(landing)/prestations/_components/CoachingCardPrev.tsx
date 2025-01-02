@@ -4,7 +4,7 @@ import React from 'react'
 import RateStats from './RateStats'
 import PriceView from '@/app/_global_components/PriceView'
 
-export default function CoachingCardPrev({img, title, description, rate, reviews, price, promotion, slug}: {img: string, title: string, description: string, rate?: number, reviews? : string[], price: number, promotion: number, slug: string}) {
+export default function CoachingCardPrev({img, title, description, rate, reviews, price, promotion, slug}: {img: string, title: string, description: string, rate?: number, reviews? : string[], price: number, promotion: number|undefined, slug: string}) {
   return (
     <a href={`/prestations/${slug}`} className='hover:bg-light xl:p-4 xl:rounded-lg sm:flex items-start justify-between gap-5 max-sm:border max-sm:border-gray-200 dark:max-sm:border-gray-600 max-sm:rounded-lg'>
         <Image alt='image prev' src={img} width={800} height={800} className='max-sm:h-32 object-cover w-full sm:w-1/5 rounded-t-lg sm:rounded-md'/>

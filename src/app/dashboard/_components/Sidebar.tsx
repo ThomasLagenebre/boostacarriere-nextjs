@@ -115,7 +115,7 @@ const DashboardPages = [
   },
   {
     label: 'Formations',
-    link: '/dashboard',
+    link: '/dashboard/formations',
     icon: <PiStudentFill size={18}/>
   },
   {

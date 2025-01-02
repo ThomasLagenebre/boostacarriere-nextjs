@@ -2,13 +2,14 @@
 import SectionTitle from '@/app/(landing)/prestations/_components/SectionTitle'
 import React from 'react'
 import DashboardSection from '../../_components/DashboardSection'
-import GeneralModule from './_modulesForm/GeneralModule';
-import ImgModule from './_modulesForm/ImgModule';
-import PriceModule from './_modulesForm/PriceModule';
-import CurrentProblemsModule from './_modulesForm/CurrentProblemsModule';
-import GainsModule from './_modulesForm/GainsModule';
-import ContentModule from './_modulesForm/ContentModule';
-import ImagesList from './_components/ImagesList';
+import ImagesList from '../edit/_components/ImagesList';
+import GeneralModule from '../edit/_modulesForm/GeneralModule';
+import ImgModule from '../edit/_modulesForm/ImgModule';
+import PriceModule from '../edit/_modulesForm/PriceModule';
+import CurrentProblemsModule from '../edit/_modulesForm/CurrentProblemsModule';
+import GainsModule from '../edit/_modulesForm/GainsModule';
+import ContentModule from '../edit/_modulesForm/ContentModule';
+
 
 export default function page() {
 

@@ -6,7 +6,7 @@ export default function PriceView({promotion, price, className}: {promotion?: nu
         const promotionAmount = price / 100 * (promotion / 100);
         return (price / 100  - promotionAmount).toFixed(2)
       } 
-      return (price/100).toFixed(2);
+      return price?.toFixed(2);
         
     };
   return (

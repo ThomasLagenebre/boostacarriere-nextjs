@@ -3,9 +3,9 @@ import DashboardSection from '@/app/dashboard/_components/DashboardSection';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
-export default function ImgModule({imgURL}: {imgURL: string}) {
-    const [imagePreview, setImagePreview] = useState<string | null>(imgURL || null);
-    const [imagePreview2, setImagePreview2] = useState<string | null>(imgURL || null);
+export default function ImgModule() {
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [imagePreview2, setImagePreview2] = useState<string | null>(null);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];

@@ -11,6 +11,8 @@ import PriceView from '@/app/_global_components/PriceView';
 export default function Hero({category, title, img, price, promotion, limitPromotion, includes, description, rate, reviews}: {category: Category, title: string, img:string, price:number, promotion: number|null|undefined, limitPromotion?: string, includes: Include[], description: string, rate: number, reviews: string[]}) {
     // Window resize
     const [windowWidth, setWindowWidth] = useState(0);
+    const effectivePromotion = promotion ?? 0;
+
     useEffect(() => {
         if (typeof window !== "undefined") {
           const handleResize = () => setWindowWidth(window.innerWidth);
@@ -79,17 +81,14 @@ export default function Hero({category, title, img, price, promotion, limitPromo
             <div className={`mt-10 absolute top-6 right-6 bg-white dark:bg-slate-800 text-gray-800 dark:text-white rounded-lg lg:p-4 max-w-[400px]`}>
                 <Image alt="Image d'illustration" src={img} width={400} height={400} className='w-full object-cover rounded-t-md'/>
                 <PriceView price={price} promotion={promotion} className='mt-4 text-xl'/>
-                {promotion && promotion > 0 && daysLeft && daysLeft > 0 && (
+                {effectivePromotion > 0 && daysLeft && daysLeft > 0 && (
                     <>
                         <p className='text-xs'>{promotion}% de réduction</p>
                         {daysLeft && daysLeft < 15 && daysLeft > 0 && (
                             <p className='text-xs text-red-600'>Plus que {daysLeft} jour{daysLeft > 1 ? "s" : "" } pour bénéficier de la réduction</p>
                         )}
-                        
                     </>
-                    
                 )}
-                
                 <div className='my-6'>
                     <h3 className='text-lg font-semibold mb-2'>Ce que contient ce coaching</h3>
                     <ul>

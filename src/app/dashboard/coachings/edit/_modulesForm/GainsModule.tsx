@@ -1,24 +1,30 @@
 'use client';
 import DashboardSection from '@/app/dashboard/_components/DashboardSection'
+import { Gain } from '@/interface/ICoaching';
 import React, { useState } from 'react'
 import { CiSquareMinus, CiSquarePlus } from 'react-icons/ci';
 
-export default function GainsModule() {
-    const [fields, setFields] = useState([""]);
+export default function GainsModule({gains}: {gains: Gain[]}) {
+    const [fields, setFields] = useState<Gain[]>(gains || []);
 
     const addField = () => {
-        setFields([...fields, ""]);  
-    };
-
-    const removeField = (index: number) => {
-        setFields(fields.filter((_, i) => i !== index));  
-    };
-
-    const handleChange = (index: number, value: string) => {
-        const newFields = [...fields]; 
-        newFields[index] = value; 
-        setFields(newFields); 
-    };
+        setFields([
+          ...fields,
+          { gain: "" }, // Ajout d'une ligne vide
+        ]);
+      };
+    
+      const removeField = (index: number) => {
+        // Suppression du champ à l'index spécifié
+        setFields(fields.filter((_, i) => i !== index));
+      };
+    
+      const handleChange = (index: number, value: string) => {
+        // Mise à jour de la description du problème
+        const newFields = [...fields];
+        newFields[index] = { ...newFields[index], gain: value};
+        setFields(newFields);
+      };
 
   return (
     <DashboardSection>
@@ -29,12 +35,11 @@ export default function GainsModule() {
                 </label>
                 {fields.map((field, index) => (
                     <div key={index} className='flex items-center gap-8 my-2'>
-                        <input
-                            type="text"
+                        <textarea
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Augmentation de salaire méritée"
                             required
-                            value={field}
+                            value={field.gain}
                             onChange={(e) => handleChange(index, e.target.value)} 
                         />
                         <button

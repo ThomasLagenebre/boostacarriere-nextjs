@@ -11,10 +11,10 @@ export default function page() {
       <DashboardSection className='mt-0'>
         <p className='font-bold'>Nous sommes le {today}</p>
       </DashboardSection>
-      <DashboardSection>
+      {/* <DashboardSection>
         <SectionTitle title='Nombre de ventes réalisés'/>
         <Chart />
-      </DashboardSection>
+      </DashboardSection> */}
       <div className='grid lg:grid-cols-2 gap-6'>
         <DashboardSection>
           <SectionTitle title='Les prochains coachings'/>
