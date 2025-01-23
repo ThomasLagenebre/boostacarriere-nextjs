@@ -1,11 +1,14 @@
 'use client';
 import React, { useState } from 'react'
 
-export default function Input({id, placeholder, label, indicationLabel, type, labelClassName, inputClassName, required, value, rows, disabled }: {id: string, placeholder?: string, label: string, indicationLabel?:string, type: 'text' | 'number' | 'textarea', labelClassName?: string, inputClassName?: string, required?: boolean, value?: string, rows?: number, disabled?: boolean}) {
+export default function Input({id, placeholder, label, indicationLabel, type, labelClassName, inputClassName, required, value, rows, disabled, onChange }: {id: string, placeholder?: string, label: string, indicationLabel?:string, type: 'text' | 'number' | 'textarea', labelClassName?: string, inputClassName?: string, required?: boolean, value?: string | number, rows?: number, disabled?: boolean, onChange?: (newValue: string | number) => void;}) {
     const [currentValue, setCurrentValue] = useState(value || '');
 
     const handleChangeValue = (newValue: string) => {
         setCurrentValue(newValue);
+        if (onChange) {
+            onChange(newValue); // Notifie le parent
+          }
     }
 
   return (

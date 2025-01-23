@@ -1,11 +1,12 @@
 import React from 'react'
-import DashboardSection from '../../_components/DashboardSection'
+import DashboardSection from '../../../_components/DashboardSection'
 import SectionTitle from '@/app/(landing)/prestations/_components/SectionTitle'
 import Image from 'next/image'
 import { MdDeleteOutline, MdOutlineRemoveRedEye } from 'react-icons/md'
 import { FaLongArrowAltLeft, FaRegEdit } from 'react-icons/fa'
 import Button from '@/app/_global_components/Button'
 import { CiSquarePlus } from 'react-icons/ci'
+import { useRouter } from 'next/navigation'
 
 export default function page() {
     const allLessons: {
@@ -28,7 +29,7 @@ export default function page() {
     <>
         <DashboardSection className='flex items-center justify-between'>
             <SectionTitle  title='Chapitre 1 : Introduction'/>
-            <Button className='text-white hover:text-secondary flex items-center gap-4' type='link' style='secondary' link='/dashboard/coachings/edit'><FaLongArrowAltLeft />Retour vers la formation</Button>
+            <Button className='text-white hover:text-secondary flex items-center gap-4' type='link' style='secondary' link='/dashboard/formations/'><FaLongArrowAltLeft />Retour vers la formation</Button>
         </DashboardSection>
         <DashboardSection>
             <a
@@ -62,7 +63,7 @@ const LessonItem = ({title, img,presentation, idx}: {title: string, img:string, 
         </div>
         <div className='w-1/6 flex items-center gap-4 justify-center'>
             <a className='cursor-pointer'><MdOutlineRemoveRedEye size={22} className='text-green-500'/></a>
-            <a className='cursor-pointer'><FaRegEdit size={18} className='text-secondary'/></a>
+            <a className='cursor-pointer' href='/dashboard/formations/add-lesson'><FaRegEdit size={18} className='text-secondary'/></a>
             <a className='cursor-pointer'><MdDeleteOutline size={22} className='text-red-400'/></a>
         </div>
       </div>

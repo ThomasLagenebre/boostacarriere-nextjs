@@ -2,7 +2,7 @@ import DashboardSection from '@/app/dashboard/_components/DashboardSection'
 import React from 'react'
 import Input from '../_components/Input'
 
-export default function GeneralModule({title, slogan, shortDescription, description, slug}: {title: string, slogan: string, shortDescription:string, description: string, slug:string}) {
+export default function GeneralModule({title, slogan, shortDescription, description, slug}: {title?: string, slogan?: string, shortDescription?:string, description?: string, slug?:string}) {
 
 
   return (

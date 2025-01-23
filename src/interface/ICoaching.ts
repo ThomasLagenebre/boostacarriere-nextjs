@@ -18,6 +18,7 @@ export interface ICoaching {
     limitPromotion?: string
     category: Category
     currentProblems: CurrentProblem[]
+    whatYouLearn?: WhatYouLearn[]
     gains: Gain[]
     includes: Include[]
     targets?: string[]
@@ -32,6 +33,10 @@ export interface ICoaching {
   
   export interface CurrentProblem {
     problem: string
+  }
+
+  export interface WhatYouLearn {
+    item: string
   }
   
   export interface Gain {

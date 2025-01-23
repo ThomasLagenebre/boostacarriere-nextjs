@@ -1,5 +1,7 @@
 'use client';
 import Image from 'next/image'
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react'
 import { AiFillFileText } from 'react-icons/ai'
 import { FaBook, FaHome, FaUser } from 'react-icons/fa'
@@ -12,6 +14,7 @@ import { PiStudentFill } from 'react-icons/pi'
 export default function Sidebar() {
    const sidebarRef = useRef<HTMLDivElement>(null);
    const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+   
 
    // Fonction pour basculer l'état de la sidebar
    const toggleSidebar = () => setSidebarIsOpen(!sidebarIsOpen);
@@ -96,8 +99,15 @@ export default function Sidebar() {
 }
 
 const SidebarItems = ({label, link, icon}: {label: string, link: string, icon: JSX.Element}) => {
+  const pathname = usePathname();
+  console.log(pathname);
+  console.log(link);
+  const currentPath = pathname.replace("/dashboard", "");
+  
+  
+  const isActive = currentPath === link.replace("/dashboard", "");;
   return (
-    <li><a className='flex items-center cursor-pointer gap-3 rounded-md p-2 hover:bg-light' href={link}>{icon}{label}</a></li>
+    <li><a className={`flex items-center cursor-pointer gap-3 rounded-md p-2 hover:bg-light hover:shadow-lg ${isActive && "border shadow-lg"}`} href={link}>{icon}{label}</a></li>
   )
 }
 

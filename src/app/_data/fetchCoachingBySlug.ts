@@ -1,5 +1,5 @@
 export async function fetchCoachingBySlug(slug: string){
-    const res = await fetch(`https://api.boostacarriere.com/api/products-by-slug/${slug}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_PATH}/products-by-slug/${slug}`);
     if (!res.ok) {
         throw new Error('Erreur lors de la récupération des coachings');
     }

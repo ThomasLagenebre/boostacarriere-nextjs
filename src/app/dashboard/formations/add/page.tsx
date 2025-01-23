@@ -2,13 +2,13 @@
 import SectionTitle from '@/app/(landing)/prestations/_components/SectionTitle'
 import React from 'react'
 import DashboardSection from '../../_components/DashboardSection'
-import ImagesList from '../edit/_components/ImagesList';
-import GeneralModule from '../edit/_modulesForm/GeneralModule';
-import ImgModule from '../edit/_modulesForm/ImgModule';
-import PriceModule from '../edit/_modulesForm/PriceModule';
-import CurrentProblemsModule from '../edit/_modulesForm/CurrentProblemsModule';
-import GainsModule from '../edit/_modulesForm/GainsModule';
-import ContentModule from '../edit/_modulesForm/ContentModule';
+import ImagesList from '../[id]/_components/ImagesList';
+import GeneralModule from '../../_modulesForm/GeneralModule';
+import ImgModule from '../../_modulesForm/ImgModule';
+import PriceModule from '../../_modulesForm/PriceModule';
+import WhatYouLearnModule from '../../_modulesForm/WhatYouLearnModule';
+import ChaptersModule from '../../_modulesForm/ChaptersModule';
+
 
 
 export default function page() {
@@ -21,11 +21,10 @@ export default function page() {
         <form className='my-6'>
             <ImagesList />
             <GeneralModule />
-            <ImgModule />
+            <ImgModule/>
             <PriceModule />
-            <CurrentProblemsModule />
-            <GainsModule />
-            <ContentModule />
+            <WhatYouLearnModule />
+            <ChaptersModule />
         </form>
     </div>
         

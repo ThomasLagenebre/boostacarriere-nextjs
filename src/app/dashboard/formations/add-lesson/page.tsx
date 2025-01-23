@@ -3,7 +3,8 @@ import DashboardSection from '../../_components/DashboardSection'
 import { FaLongArrowAltLeft } from 'react-icons/fa'
 import Button from '@/app/_global_components/Button'
 import SectionTitle from '@/app/(landing)/prestations/_components/SectionTitle'
-import Input from '../edit/_components/Input'
+import Input from '../[id]/_components/Input'
+import Link from 'next/link'
 
 export default function page() {
   return (
@@ -30,6 +31,9 @@ export default function page() {
                 ou 
                 <Input id='linkVideo' label='Lien de la vidéo' type='text'/>
             </div>
+        </DashboardSection>
+        <DashboardSection>
+            <Input id='content-lesson' label='Contenu de la leçon' type='textarea'/>
         </DashboardSection>
     </>
     

@@ -3,6 +3,7 @@ import DashboardSection from '../_components/DashboardSection'
 import SectionTitle from '@/app/(landing)/prestations/_components/SectionTitle'
 import Button from '@/app/_global_components/Button'
 import ArrayAllCoachings from '../coachings/_components/ArrayAllCoachings'
+import ArrayAllFormations from './_components/ArrayAllFormations'
 
 export default function page() {
     
@@ -12,7 +13,7 @@ export default function page() {
                 <caption className='mb-6'>
                     <div className='flex items-center justify-between mb-4'>
                         <SectionTitle title='Toutes les formations' className='text-left'/>
-                        <Button type='link' link='/dashboard/coachings/add' style='secondary' className='text-white hover:text-secondary'>Ajouter un coaching</Button>
+                        <Button type='link' link='/dashboard/formations/add' style='secondary' className='text-white hover:text-secondary'>Ajouter une formation</Button>
                     </div>
                     <p className='text-sm text-gray-500 text-left'>Gère ici l&apos;ensemble de tes formations : crée, modifie, supprime ou consulte toutes les formations disponible sur le site</p>
                 </caption>
@@ -30,7 +31,7 @@ export default function page() {
                         </th>
                     </tr>
                 </thead>
-                <ArrayAllCoachings />
+                <ArrayAllFormations />
             </table>
         </DashboardSection>
   )
