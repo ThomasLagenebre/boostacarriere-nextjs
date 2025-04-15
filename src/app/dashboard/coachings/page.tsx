@@ -30,7 +30,10 @@ export default function page() {
                         </th>
                     </tr>
                 </thead>
-                <ArrayAllCoachings />
+                <tbody>
+                    <ArrayAllCoachings />
+                </tbody>
+                
             </table>
         </DashboardSection>
   )

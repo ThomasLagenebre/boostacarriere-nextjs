@@ -7,8 +7,11 @@ import Button from '@/app/_global_components/Button';
 import RateStats from '../_components/RateStats';
 import { Category, Include } from '@/interface/ICoaching';
 import PriceView from '@/app/_global_components/PriceView';
+import { FaRegStar } from 'react-icons/fa';
+import Calendar from '../_components/Calendar';
 
-export default function Hero({category, title, img, price, promotion, limitPromotion, includes, description, rate, reviews}: {category: Category, title: string, img:string, price:number, promotion: number|null|undefined, limitPromotion?: string, includes: Include[], description: string, rate: number, reviews: string[]}) {
+export default function Hero({category, title, img, price, promotion, limitPromotion, includes, description, rate, reviews, isConnected, id}: {category: Category, title: string, img:string, price:number, promotion: number|null|undefined, limitPromotion?: string, includes: Include[], description: string, rate: number, reviews: string[], isConnected?: boolean, id: number}) {
+    const [isBooking, setIsBooking] = useState(false);
     // Window resize
     const [windowWidth, setWindowWidth] = useState(0);
     const effectivePromotion = promotion ?? 0;
@@ -68,9 +71,18 @@ export default function Hero({category, title, img, price, promotion, limitPromo
             <div className='xl:w-2/3'>
                 <h2 className='text-2xl font-bold'>{title}</h2>
                 <p>{description}</p>
-                {rate > 0 && <RateStats rate={rate} nbOfRates={reviews.length} />}
+                {isConnected ? (
+                    <Button type='button' style='light' className='flex items-center gap-2 mt-4 group'><FaRegStar className='fill-secondary group-hover:fill-light'/> Noter la formation</Button>
+                ): (
+                    <>
+                        {rate > 0 && 
+                            <RateStats rate={rate} nbOfRates={reviews.length} />}
+                        
+                            <a className='underline'>Voir les avis</a>
+                    </>
+                    
+                )}
                 
-                <a className='underline'>Voir les avis</a>
             </div>
             
         </div>
@@ -78,26 +90,34 @@ export default function Hero({category, title, img, price, promotion, limitPromo
         
         
         {windowWidth >= 1280 && (
-            <div className={`mt-10 absolute top-6 right-6 bg-white dark:bg-slate-800 text-gray-800 dark:text-white rounded-lg lg:p-4 max-w-[400px]`}>
-                <Image alt="Image d'illustration" src={img} width={400} height={400} className='w-full object-cover rounded-t-md'/>
-                <PriceView price={price} promotion={promotion} className='mt-4 text-xl'/>
-                {effectivePromotion > 0 && daysLeft && daysLeft > 0 && (
-                    <>
-                        <p className='text-xs'>{promotion}% de réduction</p>
-                        {daysLeft && daysLeft < 15 && daysLeft > 0 && (
-                            <p className='text-xs text-red-600'>Plus que {daysLeft} jour{daysLeft > 1 ? "s" : "" } pour bénéficier de la réduction</p>
+            <div className={`mt-10 absolute top-6 right-6 bg-white dark:bg-slate-800 text-gray-800 dark:text-white rounded-lg lg:p-4`}>
+                {isBooking ? (
+                    <Calendar setIsBooking={setIsBooking} productTitle={title} productId={id}/>
+                
+                ) : (
+                    <div className='w-[400px]'>
+                        <Image alt="Image d'illustration" src={img} width={400} height={400} className='w-full object-cover rounded-t-md'/>
+                        <PriceView price={price} promotion={promotion} className='mt-4 text-xl'/>
+                        {effectivePromotion > 0 && daysLeft && daysLeft > 0 && (
+                            <>
+                                <p className='text-xs'>{promotion}% de réduction</p>
+                                {daysLeft && daysLeft < 15 && daysLeft > 0 && (
+                                    <p className='text-xs text-red-600'>Plus que {daysLeft} jour{daysLeft > 1 ? "s" : "" } pour bénéficier de la réduction</p>
+                                )}
+                            </>
                         )}
-                    </>
+                        <div className='my-6'>
+                            <h3 className='text-lg font-semibold mb-2'>Ce que contient ce coaching</h3>
+                            <ul>
+                                {includes.map((include, idx) => (
+                                <li key={idx}>{include.title}</li>
+                                ))}
+                            </ul>
+                            <Button type='button' style='secondary' className='text-white hover:text-secondary mt-6' onClick={() => {setIsBooking(true)}}>Réserver un créneau</Button>
+                        </div>
+                    </div>
                 )}
-                <div className='my-6'>
-                    <h3 className='text-lg font-semibold mb-2'>Ce que contient ce coaching</h3>
-                    <ul>
-                        {includes.map((include, idx) => (
-                          <li key={idx}>{include.title}</li>
-                        ))}
-                    </ul>
-                    <Button type='button' style='secondary' className='text-white hover:text-secondary mt-6'>Réserver un créneau</Button>
-                </div>
+                
             </div>
         )}
         

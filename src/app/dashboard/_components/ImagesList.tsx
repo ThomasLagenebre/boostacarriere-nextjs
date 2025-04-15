@@ -12,7 +12,7 @@ export default function ImagesList() {
             console.log(response);
             
         })
-    }, [])
+    }, [imagesListRef])
   return (
     <div>ImagesList</div>
   )

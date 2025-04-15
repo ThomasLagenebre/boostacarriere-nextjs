@@ -1,10 +1,12 @@
+'use client';
 import React from 'react'
 import DashboardSection from './_components/DashboardSection';
 import ItemCard from './_components/ItemCard';
 import { FaUser, FaBook } from 'react-icons/fa';
 import ItemAppointment from './_components/ItemAppointment';
+import { withAuth } from '@/app/_components/withAuth';
 
-export default function page() {
+function DashboardPage() {
   const today = new Date().toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
@@ -30,3 +32,5 @@ export default function page() {
       </div>
   )
 }
+
+export default withAuth(DashboardPage);

@@ -4,15 +4,18 @@ import Button from '../_global_components/Button';
 import { IoSunny } from 'react-icons/io5';
 import {  HiOutlineMenuAlt2 } from 'react-icons/hi';
 import Link from 'next/link';
+import NavlinkDropdown from '../_components/NavlinkDropdown';
+import PrestationsNavbar from '../_components/PrestationsNavbar';
+import Image from 'next/image';
+import { useAuth } from '@/app/_context/AuthContext';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScroll, setIsScroll] = useState(false);
+  const [openUserMenu, setOpenUserMenu] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
-  const [openCoachingDropdown, setOpenCoachingDropdown] = useState (false);
-  const [openFormationsDropdown, setOpenFormationsDropdown] = useState (false);
-
   
+  const { user, loading, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,7 +27,7 @@ function Header() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, ); 
+  }, []); 
 
   return (
     <header className='xl:py-6'>
@@ -37,26 +40,9 @@ function Header() {
         <ul className={`${!isOpen && 'max-lg:hidden'} max-lg:fixed top-8 left-0 w-1/2 lg:w-fit mx-auto bg-secondary z-50 max-lg:py-4 max-lg:px-4 flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-20 justify-center max-xl:mt-6`}>
           <NavLink onClick={() => setIsOpen(false)} link='/'>Accueil</NavLink>
           <li>
-            <NavLinkDropdown onClick={() => setOpenDropdown(!openDropdown)} label='Prestations'/>
-              <div className={`z-10 ${!openDropdown ? "hidden" : "fixed"} font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600`}>
-                  <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
-                  <NavLinkDropdown onClick={() => setOpenCoachingDropdown(!openCoachingDropdown)} label='Coachings' className='ps-4'/>
-                      <div className={`z-10 ${!openCoachingDropdown && "hidden"} bg-white w-44 dark:bg-gray-700`}>
-                        <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
-                          <ItemLinkDropdown link='/' label='Premier test'/>
-                          <ItemLinkDropdown link='/' label='Premier test'/>
-                          <ItemLinkDropdown link='/' label='Premier test'/>
-                        </ul>
-                      </div>
-                  <NavLinkDropdown onClick={() => setOpenFormationsDropdown(!openFormationsDropdown)} label='Formations' className='ps-4'/>
-                      <div className={`z-10 ${!openFormationsDropdown && "hidden"} bg-white divide-y divide-gray-100  w-44 dark:bg-gray-700`}>
-                        <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
-                          <ItemLinkDropdown link='/formations/negocie-ton-salaire-efficacement' label='Premier test'/>
-                          <ItemLinkDropdown link='/formations/negocie-ton-salaire-efficacement' label='Premier test'/>
-                          <ItemLinkDropdown link='/formations/negocie-ton-salaire-efficacement' label='Premier test'/>
-                        </ul>
-                      </div>
-                  </ul>
+            <NavlinkDropdown onClick={() => setOpenDropdown(!openDropdown)} label='Prestations'/>
+              <div className={`z-10 ${!openDropdown ? "hidden" : "fixed"} font-normal bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`}>
+                  <PrestationsNavbar />
               </div>
           </li>
           {/* <NavLink onClick={() => setIsOpen(false)} link='/'>Blog</NavLink> */}
@@ -70,8 +56,43 @@ function Header() {
         </ul>
         <div className='max-lg:hidden flex items-center gap-4 max-xl:fixed max-xl:top-2 max-xl:right-4'>
           <Button type='button' onClick={() => {document.body.classList.toggle("dark")}} style='light'><IoSunny size={'20'}/></Button>
-          <Button type='link' style='light' className='font-[500]' link='/login'>Se connecter</Button>
-          <Button type='link' style='primary' className='font-[500] hover:text-light' link='/contact'>Contacte-moi</Button>
+          {user ? (
+            <>
+            <button type="button" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom" onClick={() => {setOpenUserMenu(!openUserMenu)}}>
+            <span className="sr-only">Open user menu</span>
+            <Image 
+              className="w-8 h-8 rounded-full"
+              src="https://static.vecteezy.com/system/resources/thumbnails/001/840/612/small_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg"
+              alt="user photo"
+              width={32}
+              height={32}
+            />
+            </button>
+            <div className={`z-50 ${openUserMenu ? "fixed" : "hidden"} my-4 top-14 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700 dark:divide-gray-600`} id="user-dropdown">
+            <div className="px-4 py-3">
+              <span className="block text-sm text-gray-900 dark:text-white">{user.firstname} {user.lastname}</span>
+              <span className="block text-sm text-gray-500 truncate dark:text-gray-400">{user.email}</span>
+            </div>
+            <ul className="py-2" aria-labelledby="user-menu-button">
+              <li>
+                <Link href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
+              </li>
+              <li>
+                <Link href="/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</Link>
+              </li>
+              <li>
+                <button onClick={logout} className="block w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</button>
+              </li>
+            </ul>
+          </div>
+          </>
+          ) : (
+            <>
+              <Button type='link' style='light' className='font-[500]' link='/login'>Se connecter</Button>
+              <Button type='link' style='primary' className='font-[500] hover:text-light' link='/contact'>Contacte-moi</Button>
+            </>
+          )}
+          
         </div>
         <Button type='button' onClick={() => {document.body.classList.toggle("dark")}} style='light' className='lg:hidden'><IoSunny size={'20'}/></Button>
       </nav>
@@ -84,22 +105,5 @@ export default Header
 
 const NavLink = ({children, link, onClick}: {children: React.ReactNode, link: string, onClick?: React.MouseEventHandler<HTMLAnchorElement>}) => {
   return <li className='border-b lg:border-b-2 py-2 border-transparent hover:border-white'><Link href={link} onClick={onClick}>{children}</Link></li>
-}
-
-const NavLinkDropdown = ({onClick, className, label}: {onClick: () => void, className?: string, label: string}) => {
-  return (
-    <button onClick={onClick} className={`${className} border-b lg:border-b-2 py-2 border-transparent hover:border-white flex items-center justify-center`}>
-      {label}
-      <svg className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>
-    </button>
-)
-}
-
-const ItemLinkDropdown = ({link, className, label}: {link: string, className?: string, label:string}) => {
-  return (
-    <li>
-      <a href={link} className={`${className} block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white`}>{label}</a>
-    </li>
-  )
 }
 

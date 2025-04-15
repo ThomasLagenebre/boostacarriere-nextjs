@@ -3,7 +3,14 @@ import DashboardSection from '@/app/dashboard/_components/DashboardSection'
 import React, { useState } from 'react'
 import Input from '../_components/Input';
 
-export default function PriceModule({price, promotion, promotionTime}: {price?: string, promotion?: number, promotionTime?: number}) {
+interface PriceModuleProps {
+  price?: string;
+  promotion?: number;
+  promotionTime?: number;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+}
+
+export default function PriceModule({price, promotion, promotionTime, handleChange}: PriceModuleProps) {
     const [isUnlimited, setIsUnlimited] = useState<boolean>(promotionTime === null || promotionTime === undefined);
     const [currentPromotion, setCurrentPromotion] = useState(promotion);
 
@@ -16,37 +23,30 @@ export default function PriceModule({price, promotion, promotionTime}: {price?: 
           <h4 className="font-bold underline text-secondary mb-4">Prix et réductions</h4>
           <Input
             id="price"
-            value={price && parseInt(price) * 100}
-            type="number"
-            placeholder="8999"
+            value={price}
+            type="text"
+            placeholder="Prix"
             label="Prix"
-            indicationLabel="(en centimes)"
+            onChange={handleChange}
             required
           />
           <Input
-            id="reduction"
+            id="promotion"
             value={currentPromotion}
             type="number"
-            placeholder="40"
-            label="Réduction"
-            indicationLabel="(en pourcentage)"
-            required
+            placeholder="Promotion"
+            label="Promotion (%)"
             onChange={(newValue) => setCurrentPromotion(Number(newValue))}
           />
           {currentPromotion && currentPromotion > 0 && (
             <div className="my-4">
               <Input
-                id="durationReduction"
+                id="promotionTime"
                 value={promotionTime}
                 type="number"
-                placeholder="31"
-                label="Durée de la réduction"
-                indicationLabel="(en jours)"
-                required
-                disabled={isUnlimited}
-                inputClassName={`${
-                  isUnlimited ? 'placeholder-gray-50 border-gray-50' : 'border-gray-300'
-                }`}
+                placeholder="Durée de la promotion"
+                label="Durée de la promotion (jours)"
+                onChange={handleChange}
               />
               <label className="inline-flex items-center cursor-pointer">
                 <input

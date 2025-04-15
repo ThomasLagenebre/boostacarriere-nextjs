@@ -12,7 +12,7 @@ export default function CoachingsCard({title, icon, category, description, slug 
         </div>
         <h3 className='font-semibold text-xl'>{title}</h3>
         <p className='text-sm mb-4'>{description.substring(0, 150)}{description.length > 150 && "..."}</p>
-        <Button type='link' style='secondary' link={`prestations/${slug}`} className='font-bold flex items-center gap-5 hover:text-secondary w-fit'>Boost ton CV <FaArrowRight /></Button>
+        <Button type='link' style='secondary' link={`prestations/coachings/${slug}`} className='font-bold flex items-center gap-5 hover:text-secondary w-fit'>Boost ton CV <FaArrowRight /></Button>
     </div>
   )
 }

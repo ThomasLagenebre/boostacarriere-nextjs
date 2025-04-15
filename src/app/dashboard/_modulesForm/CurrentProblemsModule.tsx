@@ -4,7 +4,12 @@ import { CurrentProblem } from '@/interface/ICoaching';
 import React, { useState } from 'react'
 import { CiSquareMinus, CiSquarePlus } from 'react-icons/ci';
 
-export default function CurrentProblemsModule({currentProblems}: {currentProblems?: CurrentProblem[]}) {
+interface CurrentProblemsModuleProps {
+  currentProblems?: any[];
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+}
+
+export default function CurrentProblemsModule({currentProblems, handleChange}: CurrentProblemsModuleProps) {
     const [fields, setFields] = useState<CurrentProblem[]>(currentProblems || []);
 
     const addField = () => {
@@ -19,7 +24,7 @@ export default function CurrentProblemsModule({currentProblems}: {currentProblem
         setFields(fields.filter((_, i) => i !== index));
       };
     
-      const handleChange = (index: number, value: string) => {
+      const handleFieldChange = (index: number, value: string) => {
         // Mise à jour de la description du problème
         const newFields = [...fields];
         newFields[index] = { ...newFields[index], problem: value};
@@ -30,10 +35,10 @@ export default function CurrentProblemsModule({currentProblems}: {currentProblem
 
     return (
         <DashboardSection>
-            <h4 className='font-bold underline text-secondary mb-4'>Section : as-tu déjà vécu ça ?</h4>
+            <h4 className='font-bold underline text-secondary mb-4'>Section : ce que tu vis actuellement</h4>
             <div className='my-4'>
                 <label htmlFor="last_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Problèmes courant <span className='italic text-xs font-normal'>(clique sur le + pour ajouter une autre ligne)</span>
+                    Problèmes actuels <span className='italic text-xs font-normal'>(clique sur le + pour ajouter une autre ligne)</span>
                 </label>
                 {fields.map((field, index) => (
                     <div key={index} className='flex items-center gap-8 my-2'>
@@ -43,7 +48,7 @@ export default function CurrentProblemsModule({currentProblems}: {currentProblem
                             placeholder="Travailler sans compter tes heures"
                             required
                             value={field.problem}
-                            onChange={(e) => handleChange(index, e.target.value)} 
+                            onChange={(e) => handleFieldChange(index, e.target.value)} 
                         />
                         <button
                             type="button"

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import React from 'react';
 
-export default function Button({ type, children, style, className, onClick, link }: {type: 'link' | 'button' | 'back', children: React.ReactNode; style: 'light' | 'dark' | 'secondary' | 'primary' | 'white' , className?: string, onClick?: () => void, link?: string}) {
+export default function Button({ type, children, style, className, onClick, link, disabled = false }: {type: 'link' | 'button' | 'back', children: React.ReactNode; style: 'light' | 'dark' | 'secondary' | 'primary' | 'white' , className?: string, onClick?: () => void, link?: string, disabled?: boolean}) {
   let bgStyle = '';
 
   switch (style) {
@@ -27,7 +27,7 @@ export default function Button({ type, children, style, className, onClick, link
   }
   if(type === 'button' || type === 'back'){
     return (
-      <button onClick={type === 'back' ? () => Router.back() : onClick} className={`${bgStyle || undefined} ${className} px-3 py-1 rounded-md`}>
+      <button disabled={disabled} onClick={type === 'back' ? () => Router.back() : onClick} className={`${disabled ? 'opacity-50 cursor-not-allowed border-gray-300 border' : bgStyle || undefined} ${className} px-3 py-1 rounded-md`}>
         {children}
       </button>
     );
