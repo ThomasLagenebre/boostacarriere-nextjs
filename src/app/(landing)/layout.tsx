@@ -17,7 +17,6 @@ export default function RootLayout({
   return (
     <>
         <Header />
-        <a href="/dashboard">Go to dashboard</a>
         {children}
         <Footer />
     </>

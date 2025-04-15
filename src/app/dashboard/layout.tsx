@@ -14,9 +14,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="flex items-start gap-2 max-w-screen-xl mx-auto">
+    <main className="lg:flex items-start gap-2 lg:max-w-screen-xl lg:mx-auto">
         <Sidebar />
-        {children}
+        <main className="max-lg:mt-20 lg:w-5/6">
+          {children}
+        </main>
+        
     </main>
   );
 }

@@ -16,7 +16,20 @@ const nextConfig = {
         port: "",
         pathname: "/512/1077/1077114.png",
       },
+      {
+        protocol: "https",
+        hostname: "ethical-leader.blog",
+        port: "",
+        pathname: "**",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "",
+        pathname: "**",
+      },
     ],
+    domains: ["static.vecteezy.com"],
   },
 };
 

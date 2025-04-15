@@ -1,3 +1,4 @@
+import {heroui} from '@heroui/theme';
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -6,14 +7,15 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/flowbite/**/*.js"
+    "./node_modules/flowbite/**/*.js",
+    "./node_modules/@heroui/theme/dist/components/(calendar|button|ripple|spinner).js"
   ],
-  plugins: [require("@tailwindcss/forms"),  require('flowbite/plugin')],
+  plugins: [require("@tailwindcss/forms"),require('flowbite/plugin'),heroui()],
   theme: {
     extend: {
       colors: {
-        'primary' : '#b9ddff',
-        'secondary' : '#004aad',
+        'primary' : '#f6a2b9',
+        'secondary' : '#62041b',
         'light': '#F1F7FF'
       },
       keyframes: {

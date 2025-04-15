@@ -61,10 +61,21 @@ const PlanData = [
             'Comprendre la négociation salariale',
             'Comprendre la négociation salariale',
             'Comprendre la négociation salariale',
+            'Comprendre la négociation salariale',
         ]
     },
     {
         title: 'Comment devenir riche yeah!',
+        duration: 30,
+        lessons: [
+            'Youhou ça marche !',
+            'Comprendre la négociation salariale',
+            'Comprendre la négociation salariale',
+            'Comprendre la négociation salariale',
+        ]
+    },
+    {
+        title: 'Comment devenir riche 550',
         duration: 30,
         lessons: [
             'Youhou ça marche !',
