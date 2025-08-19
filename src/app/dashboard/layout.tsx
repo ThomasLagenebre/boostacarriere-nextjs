@@ -4,7 +4,7 @@ import Sidebar from "./_components/Sidebar";
 
 
 export const metadata: Metadata = {
-  title: "Boostacarriere",
+  title: "Boostacarriere - Tableau de bord",
   description: "Propulser sa carrière grâce à des coachings créer sur mesure.",
 };
 

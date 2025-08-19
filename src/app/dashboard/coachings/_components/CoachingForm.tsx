@@ -10,10 +10,12 @@ import ContentModule from '../../_modulesForm/ContentModule';
 import DashboardSection from '../../_components/DashboardSection';
 import Input from '../../_components/Input';
 import { toast, ToastContainer } from 'react-toastify';
-import { uploadToFirebase } from '@/lib/uploadToFirebase';
+import { log } from 'console';
+import { useRouter } from 'next/navigation';
+import Button from '@/app/_global_components/Button';
 
 function CoachingForm() {
-    const [imgFile, setImgFile] = useState<File | null>(null);
+    const router = useRouter();
     const [request, setRequest] = useState({
         title: '',
         slogan: '',
@@ -22,44 +24,102 @@ function CoachingForm() {
         shortDescription: '',
         price: 0,
         promotion: 0,
+        promotionTime: 0,
+        currentProblems: [] as {problem: string}[],
+        gains: [] as {gain: string}[],
+        content: [] as { title: string; description: string }[],
     });
 
-    const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        console.log(file);
-        
-        if (file) {
-            setImgFile(file);
-        }
-    };
 
-    // Fonction wrapper pour adapter le type
     const handleImgModuleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        if (e.target instanceof HTMLInputElement) {
-            handleImageChange(e as React.ChangeEvent<HTMLInputElement>);
+        if (e.target) {
+            setRequest(prev => ({
+                ...prev,
+                picture: e.target.value
+            }));    
         }
     };
 
+    const handlePriceModuleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (e.target) {
+            setRequest(prev => ({
+                ...prev,
+                price: Number(e.target.value)
+            }));
+        }
+    };
+
+    const handlePromotionModuleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (e.target) {
+            setRequest(prev => ({
+                ...prev,
+                promotion: Number(e.target.value)
+            }));
+        }
+    };
+
+    const handlePromotionTimeModuleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (e.target) {
+            setRequest(prev => ({
+                ...prev,
+                promotionTime: Number(e.target.value)
+            }));
+        }
+    };
+
+    const handleCurrentProblemsModuleChange = (problems: {problem: string}[]) => {
+        setRequest(prev => ({
+            ...prev,
+            currentProblems: problems
+        }));
+    }; 
+
+    const handleGainsModuleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (e.target) {
+            try {
+                const parsedGains = JSON.parse(e.target.value);
+                setRequest(prev => ({
+                    ...prev,
+                    gains: parsedGains
+                }));
+            } catch (error) {
+                console.error('Error parsing gains:', error);
+            }
+        }
+    };
+
+    const handleContentModuleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (e.target) {
+            try {
+                const parsedContent = JSON.parse(e.target.value);
+                setRequest(prev => ({
+                    ...prev,
+                    content: parsedContent
+                }));
+            } catch (error) {
+                console.error('Error parsing content:', error);
+            }
+        }
+    };
+    
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-      console.log(imgFile);
-      
-        if (imgFile) {
-          try {
-              const downloadUrlImg = await uploadToFirebase(imgFile, "Test");
-              console.log(downloadUrlImg);
-              
-              setRequest((prevRequest) => ({ ...prevRequest, picture: downloadUrlImg }));
-          } catch (error) {
-              console.error("Erreur lors de l'upload de l'image :", error);
-          }
-      }
-
-      if(request.picture !== ""){
         try {
-          const response = await createCoaching(request);
-          console.log("Réponse API :", response);
-          toast.success("Coaching créé avec succès !");
+          // Transform currentProblems from {problem: string}[] to string[]
+          const transformedRequest = {
+            ...request,
+            currentProblems: request.currentProblems.map(item => item.problem)
+          };
+          
+          const response = await createCoaching(transformedRequest);       
+          if (response.ok) {
+            const responseData = await response.json();
+            toast.success('Coaching créé avec succès !');
+            router.push('/dashboard/coachings');
+          } else {
+            const errorData = await response.json();
+            toast.error(errorData.message || 'Erreur lors de la création du coaching');
+          }
       } catch (error: any) {
           console.error("Erreur lors de l'envoi :", error);
           try {
@@ -72,7 +132,6 @@ function CoachingForm() {
           } catch {
               toast.error("Une erreur est survenue.");
           }
-      }
       }
         
     };
@@ -91,13 +150,12 @@ function CoachingForm() {
 
                 <ImgModule imgURL={request.picture} handleChange={handleImgModuleChange} />
 
-                {/* Modules désactivés pour le moment */}
-                {/* <PriceModule />
-                <CurrentProblemsModule />
-                <GainsModule />
-                <ContentModule /> */}
+                <PriceModule price={request.price} promotion={request.promotion} promotionTime={request.promotionTime} handlePriceChange={handlePriceModuleChange} handlePromotionChange={handlePromotionModuleChange} handlePromotionTimeChange={handlePromotionTimeModuleChange} />
+                <CurrentProblemsModule currentProblems={request.currentProblems} handleChange={handleCurrentProblemsModuleChange} />
+                <GainsModule gains={request.gains} handleChange={handleGainsModuleChange} />
+                <ContentModule contents={request.content} handleChange={handleContentModuleChange} /> 
 
-                <button type="submit">Envoyer</button>
+                <Button type="submit" style="secondary" className="w-full">Envoyer</Button>
             </form>
         </>
     );

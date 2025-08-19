@@ -13,7 +13,7 @@ export default function CoachingCardPrev({img, title, description, rate, reviews
             <p className='text-sm'>{description?.slice(0, 150)} {description?.length > 150 && "..."}</p>
             {reviews && rate && <RateStats rate={rate} nbOfRates={reviews?.length} />}
         </div>
-        <PriceView price={price} promotion={promotion} className='w-1/5'/>
+        <PriceView price={price} promotion={promotion} className='w-1/5 max-sm:px-4 max-sm:py-2'/>
     </a>
   )
 }

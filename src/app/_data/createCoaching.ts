@@ -1,10 +1,31 @@
-import { toast } from "react-toastify";
+import Cookies from 'js-cookie';
 
-export async function createCoaching(request: {title: string, slogan: string, picture: string, description: string, shortDescription: string, price: number, promotion?: number }){
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
+export async function createCoaching(request: {
+    title: string;
+    slogan: string;
+    picture: string;
+    description: string;
+    shortDescription: string;
+    price: number;
+    promotion?: number;
+    promotionTime?: number;
+    currentProblems: string[];
+    gains: { gain: string }[];
+    content: { title: string; description: string }[];
+}) {
+    const token = Cookies.get('auth_token');
+    if (!token) {
+        throw new Error('Connexion requise');
+    }
+
+    console.log(token);
+    console.log(request);
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {    
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
             title: request.title,
@@ -14,17 +35,20 @@ export async function createCoaching(request: {title: string, slogan: string, pi
             short_description: request.shortDescription,
             product_category_id: 1,
             price: request.price,
-            promotion: request.promotion ? request.promotion : 0,
+            promotion: request.promotion || 0,
+            promotion_time: request.promotionTime || null,
+            current_problems: request.currentProblems,
+            gains: request.gains,
+            content: request.content,
             is_active: true
         })
     });
 
+    const data = await res.json();
 
-    const data = await res.json(); // Récupère toujours le JSON de la réponse
+    if (!res.ok) {
+        throw new Error(JSON.stringify(data));
+    }
 
-if (!res.ok) {
-    throw new Error(JSON.stringify(data));
-}
-
-return data;
+    return data;
 }

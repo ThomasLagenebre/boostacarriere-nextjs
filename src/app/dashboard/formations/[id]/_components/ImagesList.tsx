@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect } from 'react'
 import { listAll, ref } from 'firebase/storage'
-import { storage } from '@/utils/firebase'
+import { storage } from '@/lib/firebase'
 
 
 export default function ImagesList() {
@@ -9,10 +9,9 @@ export default function ImagesList() {
 
     useEffect(() => {
         listAll(imagesListRef).then((response) => {
-            console.log(response);
-            
+            // Traitement des images
         })
-    }, [])
+    }, [imagesListRef])
   return (
     <div>ImagesList</div>
   )

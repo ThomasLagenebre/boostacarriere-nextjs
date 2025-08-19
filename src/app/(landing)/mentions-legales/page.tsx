@@ -1,126 +1,305 @@
 import React from 'react'
-import LegalParagraph from './_components/LegalParagraph'
+import Link from 'next/link'
+import { FaShieldAlt, FaBuilding, FaServer, FaUserShield, FaCopyright, FaExclamationTriangle, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa'
 
-export default function page() {
+export default function MentionsLegalesPage() {
   return (
-    <div className="max-w-screen-xl mx-auto mb-20 dark:text-white text-justify">
-      <h2 className="text-center text-3xl font-bold mb-10 text-secondary">Mentions légales</h2>
-      <p className="italic">
-        Conformément aux dispositions de la loi n° 2004-575 du 21 juin 2004 pour
-        la confiance en l&apos;économie numérique, il est précisé aux utilisateurs du
-        site Boostacarriere l&apos;identité des différents intervenants dans le cadre
-        de sa réalisation et de son suivi.
-      </p>
-      <LegalParagraph title={"Éditeur du site"}>
-        Le site internet Boostacarriere est édité par : <br />
-        <span className="font-bold">Boostacarriere</span>
-        <br />
-        Entreprise individuelle <br />
-        SIRET : 931 740 906 00017 <br />
-        Siège social : 262 rue Gabriel Péri, 94230 Cachan <br />
-        Directrice de la publication : Laurine Lagenebre <br />
-        Contact :{" "}
-        <a className="underline" href="mailto:contact.boostacarriere@gmail.com">
-          contact.boostacarriere@gmail.com
-        </a>
-        <br />
-      </LegalParagraph>
-      <LegalParagraph title={"Hébergement du site"}>
-        Le site est hébergé par : <br />
-        <span className="font-bold">HOSTINGER INTERNATIONAL LTD</span> <br />
-        61 Lordou Vironos Street, 6023 Larnaca, Chypre <br />
-        Pour les contacter :{" "}
-        <a
-          className="underline"
-          target="_blank"
-          rel="noreferrer"
-          href="https://www.hostinger.fr/contact"
-        >
-          https://www.hostinger.fr/contact
-        </a>
-        <br />
-      </LegalParagraph>
-      <LegalParagraph title={"Politique de confidentialité et cookies"}>
-        <p>
-          En France, les données personnelles sont notamment protégées par la
-          loi n° 78-87 du 6 janvier 1978, la loi n° 2004-801 du 6 août 2004,
-          l’article L. 226-13 du Code pénal et la Directive Européenne du 24
-          octobre 1995.{" "}
-        </p>
-        <p className="my-2">
-          A l’occasion de l’utilisation du site , peuvent être recueillies :
-          l’URL des liens visités sur ce site, le fournisseur d’accès de
-          l’utilisateur, l’adresse de protocole Internet (IP) de l’utilisateur,
-          le fuseau horaire de l&apos;utilisateur.{" "}
-        </p>
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <section className="relative py-16 px-4 lg:px-8 bg-primary">
+        <div className="max-w-4xl mx-auto text-center text-white">
+          <div className="flex justify-center mb-6">
+            <FaShieldAlt className="text-6xl text-white opacity-80" />
+          </div>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">
+            Mentions Légales
+          </h1>
+          <p className="text-xl text-gray-100">
+            Conformément aux dispositions de la loi n° 2004-575 du 21 juin 2004 pour la confiance en l&apos;économie numérique
+          </p>
+        </div>
+      </section>
 
-        <p className="my-2">
-          Toutes les informations recueillies peuvent être utilisées pour :
-          Personnaliser votre expérience et répondre à vos besoins individuels ,
-          fournir un contenu publicitaire personnalisé, améliorer notre site,
-          améliorer le service client et vos besoins de prise en charge et
-          établir des informations statistiques concernant l&apos;utilisation du site
-          web.
-        </p>
-        <ol className="list-decimal ps-10">
-          <li>
-            <h4 className="text-lg font-bold text-secondary dark:text-primary">
-              Informations collectées
-            </h4>
-            <p>
-              Lorque l&apos;utilisateur remplis des formulaires, il fournis
-              volontairement certaines informations énumérées ci-dessous :{" "}
-            </p>
-            <ul className="list-disc ps-6">
-              <li>Adresse email</li>
-              <li>Nom complet</li>
-            </ul>
-            Sur chacun des formulaires présents, l&apos;utilisateur consent
-            explicitement l&apos;utilisation de ses données personnelles conformément
-            aux présentes mentions légales.
-          </li>
-          <li>
-            <h4 className="text-lg font-bold text-secondary dark:text-primary">
-              Utilisation des données
-            </h4>
-            <p>
-              Boostacarriere est responsable du traitement de ces données. Les
-              informations ci-listées précédemment sont utilisées afin de :{" "}
-            </p>
-            <ul className="list-disc ps-6">
-              <li>Partager l&apos;actualité de Boostacarriere</li>
-              <li>Personnaliser les échanges avec Boostacarriere</li>
-              <li>Vous permettre d&apos;accèder aux services demandées</li>
-            </ul>
-            Les informations personnelles collectées par Boostacarriere ne
-            seront utilisées que dans le cadre de leurs missions, elles ne
-            pourront être utilisées à des fins commerciales par Boostacarriere
-            et ses partenaires. Elles ne sont ni vendues, ni échangées, ni
-            transférées à des tiers, hors entreprises de confiance qui oeuvrent
-            avec Boostacarriere à l&apos;exploitation du site et du bon déroulement
-            des activités.
-          </li>
-          <li>
-            <h4 className="text-lg font-bold text-secondary dark:text-primary">
-              Protection des données personnelles
-            </h4>
-            <p>
-              Les informations recueillies via le formulaire de contact ou de
-              commande sont destinées à la gestion de la relation commerciale.
-              Conformément à la loi « Informatique et Libertés », vous disposez
-              d’un droit d’accès, de rectification, de suppression et
-              d’opposition sur vos données personnelles. Pour exercer ce droit,
-              vous pouvez me contacter à contact.boostacarriere@gmail.com
-            </p>
-          </li>
-        </ol>
-      </LegalParagraph>
-      <LegalParagraph title={"Propriété intellectuelle"}>
-        Tous les éléments du site (textes, images, logos, etc.) sont protégés
-        par les droits d’auteur. Toute reproduction, modification, distribution
-        ou exploitation de ces éléments sans autorisation préalable est
-        strictement interdite.
-      </LegalParagraph>
+      {/* Navigation rapide */}
+      <section className="py-8 px-4 lg:px-8 bg-white border-b">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-4">
+            <a href="#editeur" className="px-4 py-2 bg-gray-100 hover:bg-primary hover:text-white rounded-lg text-sm transition-colors duration-300">
+              Éditeur
+            </a>
+            <a href="#hebergement" className="px-4 py-2 bg-gray-100 hover:bg-primary hover:text-white rounded-lg text-sm transition-colors duration-300">
+              Hébergement
+            </a>
+            <a href="#confidentialite" className="px-4 py-2 bg-gray-100 hover:bg-primary hover:text-white rounded-lg text-sm transition-colors duration-300">
+              Confidentialité
+            </a>
+            <a href="#propriete" className="px-4 py-2 bg-gray-100 hover:bg-primary hover:text-white rounded-lg text-sm transition-colors duration-300">
+              Propriété
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Contenu principal */}
+      <section className="py-12 px-4 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          
+          {/* Éditeur du site */}
+          <div id="editeur" className="mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <FaBuilding className="text-primary" />
+              Éditeur du site
+            </h2>
+            <div className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Informations de l&apos;entreprise</h3>
+                  <div className="space-y-3 text-gray-700">
+                    <div className="flex items-start gap-3">
+                      <FaBuilding className="text-primary mt-1 flex-shrink-0" />
+                      <div>
+                        <strong>Raison sociale :</strong> Boostacarriere<br/>
+                        <span className="text-sm text-gray-500">Entreprise individuelle</span>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <FaMapMarkerAlt className="text-primary mt-1 flex-shrink-0" />
+                      <div>
+                        <strong>Adresse :</strong><br/>
+                        262 rue Gabriel Péri<br/>
+                        94230 Cachan, France
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <FaEnvelope className="text-primary mt-1 flex-shrink-0" />
+                      <div>
+                        <strong>Email :</strong><br/>
+                        <a href="mailto:contact.boostacarriere@gmail.com" className="text-primary hover:underline">
+                          contact.boostacarriere@gmail.com
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Informations légales</h3>
+                  <div className="space-y-3 text-gray-700">
+                    <div>
+                      <strong>SIRET :</strong> 931 740 906 00017
+                    </div>
+                    <div>
+                      <strong>Directrice de la publication :</strong><br/>
+                      Laurine Lagenebre
+                    </div>
+                    <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                      <p className="text-sm text-blue-800">
+                        <strong>Note :</strong> Ce site est édité par une entreprise individuelle 
+                        spécialisée dans le coaching et la formation professionnelle.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Hébergement */}
+          <div id="hebergement" className="mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <FaServer className="text-primary" />
+              Hébergement du site
+            </h2>
+            <div className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Hébergeur</h3>
+                  <div className="space-y-3 text-gray-700">
+                    <div>
+                      <strong>Nom :</strong> HOSTINGER INTERNATIONAL LTD
+                    </div>
+                    <div>
+                      <strong>Adresse :</strong><br/>
+                      61 Lordou Vironos Street<br/>
+                      6023 Larnaca, Chypre
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Contact hébergeur</h3>
+                  <div className="space-y-3">
+                    <a 
+                      href="https://www.hostinger.fr/contact" 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-300"
+                    >
+                      <FaEnvelope />
+                      Contacter l&apos;hébergeur
+                    </a>
+                    <div className="text-sm text-gray-600">
+                      <p>L&apos;hébergeur est responsable de la disponibilité technique du site web.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Politique de confidentialité */}
+          <div id="confidentialite" className="mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <FaUserShield className="text-primary" />
+              Politique de confidentialité et cookies
+            </h2>
+            
+            <div className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm mb-6">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Cadre légal</h3>
+              <p className="text-gray-700 mb-4">
+                En France, les données personnelles sont notamment protégées par la loi n° 78-87 du 6 janvier 1978, 
+                la loi n° 2004-801 du 6 août 2004, l&apos;article L. 226-13 du Code pénal et la Directive Européenne du 24 octobre 1995.
+              </p>
+              <p className="text-gray-700">
+                À l&apos;occasion de l&apos;utilisation du site, peuvent être recueillies : l&apos;URL des liens visités sur ce site, 
+                le fournisseur d&apos;accès de l&apos;utilisateur, l&apos;adresse de protocole Internet (IP) de l&apos;utilisateur, 
+                le fuseau horaire de l&apos;utilisateur.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              {/* Informations collectées */}
+              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <FaExclamationTriangle className="text-primary" />
+                  Informations collectées
+                </h4>
+                <p className="text-gray-700 mb-4">
+                  Lorsque l&apos;utilisateur remplit des formulaires, il fournit volontairement certaines informations énumérées ci-dessous :
+                </p>
+                <ul className="list-disc list-inside text-gray-700 space-y-1 ml-4">
+                  <li>Adresse email</li>
+                  <li>Nom complet</li>
+                  <li>Informations professionnelles (selon le formulaire)</li>
+                </ul>
+                <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <p className="text-sm text-green-800">
+                    <strong>Consentement :</strong> Sur chacun des formulaires présents, l&apos;utilisateur consent 
+                    explicitement l&apos;utilisation de ses données personnelles conformément aux présentes mentions légales.
+                  </p>
+                </div>
+              </div>
+
+              {/* Utilisation des données */}
+              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <FaUserShield className="text-primary" />
+                  Utilisation des données
+                </h4>
+                <p className="text-gray-700 mb-4">
+                  Boostacarriere est responsable du traitement de ces données. Les informations collectées sont utilisées afin de :
+                </p>
+                <ul className="list-disc list-inside text-gray-700 space-y-1 ml-4 mb-4">
+                  <li>Partager l&apos;actualité de Boostacarriere</li>
+                  <li>Personnaliser les échanges avec Boostacarriere</li>
+                  <li>Vous permettre d&apos;accéder aux services demandés</li>
+                  <li>Améliorer la qualité de nos prestations</li>
+                </ul>
+                <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="text-sm text-blue-800">
+                    <strong>Protection :</strong> Les informations personnelles collectées ne seront utilisées que dans le cadre de nos missions. 
+                    Elles ne pourront être utilisées à des fins commerciales et ne sont ni vendues, ni échangées, ni transférées à des tiers.
+                  </p>
+                </div>
+              </div>
+
+              {/* Protection des données */}
+              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <FaShieldAlt className="text-primary" />
+                  Protection des données personnelles
+                </h4>
+                <p className="text-gray-700 mb-4">
+                  Les informations recueillies via le formulaire de contact ou de commande sont destinées à la gestion de la relation commerciale.
+                </p>
+                <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <h5 className="font-semibold text-yellow-900 mb-2">Vos droits RGPD :</h5>
+                  <p className="text-yellow-800 text-sm mb-3">
+                    Conformément à la loi « Informatique et Libertés », vous disposez d&apos;un droit d&apos;accès, 
+                    de rectification, de suppression et d&apos;opposition sur vos données personnelles.
+                  </p>
+                  <p className="text-yellow-800 text-sm">
+                    <strong>Pour exercer ce droit :</strong>{' '}
+                    <a href="mailto:contact.boostacarriere@gmail.com" className="underline hover:text-yellow-900">
+                      contact.boostacarriere@gmail.com
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Propriété intellectuelle */}
+          <div id="propriete" className="mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <FaCopyright className="text-primary" />
+              Propriété intellectuelle
+            </h2>
+            <div className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Protection des contenus</h3>
+                  <p className="text-gray-700 mb-4">
+                    Tous les éléments du site (textes, images, logos, etc.) sont protégés par les droits d&apos;auteur. 
+                    Toute reproduction, modification, distribution ou exploitation de ces éléments sans autorisation préalable 
+                    est strictement interdite.
+                  </p>
+                  <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-sm text-red-800">
+                      <strong>Attention :</strong> La reproduction non autorisée de tout ou partie de ce site 
+                      est formellement interdite et constitue une contrefaçon.
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Marques et logos</h3>
+                  <ul className="text-gray-700 space-y-2">
+                    <li>• Le nom "Boostacarriere" est une marque déposée</li>
+                    <li>• Les logos et visuels sont protégés par le droit d&apos;auteur</li>
+                    <li>• Les contenus de formation sont protégés par la propriété intellectuelle</li>
+                    <li>• Toute utilisation commerciale nécessite une autorisation écrite</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-16 px-4 lg:px-8 bg-secondary">
+        <div className="max-w-4xl mx-auto text-center text-white">
+          <h2 className="text-3xl font-bold mb-4">
+            Des questions sur nos mentions légales ?
+          </h2>
+          <p className="text-xl mb-8 text-gray-100">
+            Notre équipe est là pour vous accompagner
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link 
+              href="/contact" 
+              className="bg-white text-secondary px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300"
+            >
+              Nous contacter
+            </Link>
+            <Link 
+              href="/cgv" 
+              className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-secondary transition-colors duration-300"
+            >
+              Voir nos CGV
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

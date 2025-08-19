@@ -83,7 +83,9 @@ export const Chart = () => (
     data={chartdata}
     index="date"
     categories={["Coachings", "Formations", "Ebooks"]}
-    onValueChange={(v) => console.log(v)}
+    onValueChange={(v) => {
+      // Gestion du changement de valeur
+    }}
     xAxisLabel="Mois"
     colors={["blue", "pink"]}
   />

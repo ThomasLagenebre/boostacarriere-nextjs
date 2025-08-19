@@ -1,7 +1,6 @@
 'use client';
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
-import { log } from 'console';
+import { createContext, useContext, useState, useEffect, ReactNode, useRef } from 'react';
+import { useRouter } from 'next/navigation';    
 import Cookies from 'js-cookie';
 
 interface Role {
@@ -25,13 +24,13 @@ interface User {
   firstname: string;
   lastname: string;
   role: Role;
+  email_verified_at: string | null;
 }
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => Promise<void>;
+  isHydrated: boolean;
   checkAuth: () => Promise<void>;
 }
 
@@ -40,122 +39,103 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isHydrated, setIsHydrated] = useState(false);
   const router = useRouter();
+  const isNavigating = useRef(false);
 
   const checkAuth = async () => {
     const token = Cookies.get('auth_token');
+    
     if(!token) {
       setUser(null);
       setLoading(false);
+      console.log('AuthContext: Pas de token, on ne fait rien');
       return;
     }
 
     try {
+      console.log('AuthContext: Je suis dans la fonction checkAuth');
+      console.log('AuthContext: Token:', token);
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
-        credentials: 'include',
+        method: 'GET',
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
         }
       });
-      
+      console.log('AuthContext: Réponse de la requête:', response);
       if (response.ok) {
         const responseData = await response.json();
-        console.log('User data:', responseData);
         setUser(responseData.data);
-      } else {
-        console.log('Response not ok:', response.status);
+      } else if (response.status === 401) {
+        // Seulement supprimer le token si c'est une erreur d'authentification
+        console.log('AuthContext: Token invalide, suppression');
         setUser(null);
         Cookies.remove('auth_token');
+      } else {
+        // Pour les autres erreurs (500, 404, etc.), garder le token
+        console.log('AuthContext: Erreur serveur, on garde le token');
+        setUser(null);
       }
     } catch (error) {
       console.error('Auth check error:', error);
+      // En cas d'erreur réseau, on garde le token
       setUser(null);
-      Cookies.remove('auth_token');
     } finally {
       setLoading(false);
     }
   };
 
-  const login = async (email: string, password: string) => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000',
-          'Access-Control-Allow-Credentials': 'true'
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Problème de connexion, veuillez réessayer ultérieurement');
-      }
-
-      const data = await response.json();
-      console.log('Login response:', data);
-
-      // Stockage du token avec plus d'options
-      Cookies.set('auth_token', data.token, { 
-        expires: 7,
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax'
-      });
-      
-      console.log('Token stored:', Cookies.get('auth_token'));
-
-      // Stockage direct des informations utilisateur
-      if (data.data) {
-        setUser(data.data);
-      } else {
-        await checkAuth();
-      }
-
-      router.push('/dashboard');
-    } catch (error) {
-      console.error('Login error:', error);
-      throw error;
-    }
-  };
-
-  const logout = async () => {
-    try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`, {
-        method: 'POST',
-        credentials: 'include',
-      });
-      setUser(null);
-      Cookies.remove('auth_token');
-      router.push('/');
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
-  };
 
   useEffect(() => {
-    checkAuth();
-
-    const handleFocus = () => {
-      checkAuth();
+    let mounted = true;
+    
+    const initAuth = async () => {
+      if (mounted) {
+        await checkAuth();
+        setIsHydrated(true);
+      }
     };
 
-    window.addEventListener('focus', handleFocus);
-    return () => window.removeEventListener('focus', handleFocus);
+    initAuth();
+
+    const handleFocus = () => {
+      if (mounted && !isNavigating.current) {
+        checkAuth();
+      }
+    };
+
+    // Ajouter l'event listener seulement si le composant est monté
+    if (typeof window !== 'undefined') {
+      window.addEventListener('focus', handleFocus);
+    }
+
+    return () => {
+      mounted = false;
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('focus', handleFocus);
+      }
+    };
   }, []);
 
   useEffect(() => {
+    let mounted = true;
+    
     const interval = setInterval(() => {
-      checkAuth();
+      if (mounted && !isNavigating.current) {
+        checkAuth();
+      }
     }, 5 * 60 * 1000);
 
-    return () => clearInterval(interval);
+    return () => {
+      mounted = false;
+      clearInterval(interval);
+    };
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, checkAuth }}>
+    <AuthContext.Provider value={{ user, loading, isHydrated, checkAuth }}>
       {children}
     </AuthContext.Provider>
   );

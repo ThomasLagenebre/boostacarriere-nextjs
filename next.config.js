@@ -12,6 +12,12 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "update.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "cdn-icons-png.flaticon.com",
         port: "",
         pathname: "/512/1077/1077114.png",
@@ -27,6 +33,12 @@ const nextConfig = {
         hostname: "localhost",
         port: "",
         pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
+        port: "",
+        pathname: "/**",
       },
     ],
     domains: ["static.vecteezy.com"],

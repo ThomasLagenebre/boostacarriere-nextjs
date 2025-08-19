@@ -1,37 +1,43 @@
 'use client';
 import DashboardSection from '@/app/dashboard/_components/DashboardSection'
-import { CurrentProblem } from '@/interface/ICoaching';
 import React, { useState } from 'react'
 import { CiSquareMinus, CiSquarePlus } from 'react-icons/ci';
 
+interface ProblemObject {
+    problem: string;
+}
+
 interface CurrentProblemsModuleProps {
-  currentProblems?: any[];
-  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  currentProblems: ProblemObject[];
+  handleChange: (problems: ProblemObject[]) => void;
 }
 
 export default function CurrentProblemsModule({currentProblems, handleChange}: CurrentProblemsModuleProps) {
-    const [fields, setFields] = useState<CurrentProblem[]>(currentProblems || []);
+    const [fields, setFields] = useState<ProblemObject[]>(() => {
+        if (!Array.isArray(currentProblems)) return [];
+        return currentProblems.map(problem => ({
+            problem: typeof problem === 'string' ? problem : problem.problem
+        }));
+    });
 
     const addField = () => {
-        setFields([
-          ...fields,
-          { problem: "" }, // Ajout d'une ligne vide
-        ]);
-      };
-    
-      const removeField = (index: number) => {
-        // Suppression du champ à l'index spécifié
-        setFields(fields.filter((_, i) => i !== index));
-      };
-    
-      const handleFieldChange = (index: number, value: string) => {
-        // Mise à jour de la description du problème
-        const newFields = [...fields];
-        newFields[index] = { ...newFields[index], problem: value};
+        const newFields = [...fields, { problem: "" }];
         setFields(newFields);
-      };
-
+        handleChange(newFields);
+    };
     
+    const removeField = (index: number) => {
+        const newFields = fields.filter((_, i) => i !== index);
+        setFields(newFields);
+        handleChange(newFields);
+    };
+    
+    const handleFieldChange = (index: number, value: string) => {
+        const newFields = [...fields];
+        newFields[index] = { problem: value };
+        setFields(newFields);
+        handleChange(newFields);
+    };
 
     return (
         <DashboardSection>

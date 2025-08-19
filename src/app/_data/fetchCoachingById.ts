@@ -1,9 +1,17 @@
-export async function fetchCoachingById(id: number, options = {}){
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`, {cache: 'no-store'});
-    if (!res.ok) {
-        throw new Error('Erreur lors de la récupération des coachings');
-    }
-    const currentCoaching = await res.json();
+export async function fetchCoachingById(id: number) {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`;
+    
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
 
-    return currentCoaching.data
+    if (!response.ok) {
+        return null;
+    }
+
+    const data = await response.json();
+    return data.data;
 }

@@ -1,9 +1,10 @@
 'use client';
 import Link from 'next/link';
-import Router from 'next/router';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
-export default function Button({ type, children, style, className, onClick, link, disabled = false }: {type: 'link' | 'button' | 'back', children: React.ReactNode; style: 'light' | 'dark' | 'secondary' | 'primary' | 'white' , className?: string, onClick?: () => void, link?: string, disabled?: boolean}) {
+export default function Button({ type, children, style, className, onClick, link, disabled = false }: {type: 'link' | 'button' | 'back' | 'submit', children: React.ReactNode; style: 'light' | 'dark' | 'secondary' | 'primary' | 'white' , className?: string, onClick?: () => void, link?: string, disabled?: boolean}) {
+  const router = useRouter();
   let bgStyle = '';
 
   switch (style) {
@@ -25,9 +26,25 @@ export default function Button({ type, children, style, className, onClick, link
     default:
       bgStyle = '';
   }
-  if(type === 'button' || type === 'back'){
+  
+  if(type === 'submit'){
     return (
-      <button disabled={disabled} onClick={type === 'back' ? () => Router.back() : onClick} className={`${disabled ? 'opacity-50 cursor-not-allowed border-gray-300 border' : bgStyle || undefined} ${className} px-3 py-1 rounded-md`}>
+      <button 
+        type="submit"
+        disabled={disabled} 
+        className={`${disabled ? 'opacity-50 cursor-not-allowed border-gray-300 border' : bgStyle || undefined} ${className} px-3 py-1 rounded-md`}
+      >
+        {children}
+      </button>
+    );
+  } else if(type === 'button' || type === 'back'){
+    return (
+      <button 
+        type="button"
+        disabled={disabled} 
+        onClick={type === 'back' ? () => router.back() : onClick} 
+        className={`${disabled ? 'opacity-50 cursor-not-allowed border-gray-300 border' : bgStyle || undefined} ${className} px-3 py-1 rounded-md`}
+      >
         {children}
       </button>
     );
@@ -39,4 +56,5 @@ export default function Button({ type, children, style, className, onClick, link
     );
   }
   
+  return null;
 }

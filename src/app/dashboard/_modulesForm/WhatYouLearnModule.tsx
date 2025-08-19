@@ -1,32 +1,32 @@
 'use client';
 import DashboardSection from '@/app/dashboard/_components/DashboardSection'
-import { WhatYouLearn } from '@/interface/ICoaching';
 import React, { useState } from 'react'
 import { CiSquareMinus, CiSquarePlus } from 'react-icons/ci';
 
-export default function WhatYouLearnModule({whatYouLearn}: {whatYouLearn?: WhatYouLearn[]}) {
-    const [fields, setFields] = useState<WhatYouLearn[]>(whatYouLearn || []);
+interface WhatYouLearnModuleProps {
+    whatYouLearn: string[];
+    handleChange: (whatYouLearn: string[]) => void;
+}
+
+export default function WhatYouLearnModule({ whatYouLearn, handleChange }: WhatYouLearnModuleProps) {
+    const [fields, setFields] = useState<string[]>(whatYouLearn || []);
 
     const addField = () => {
-        setFields([
-          ...fields,
-          { item: "" }, // Ajout d'une ligne vide
-        ]);
-      };
-    
-      const removeField = (index: number) => {
-        // Suppression du champ à l'index spécifié
-        setFields(fields.filter((_, i) => i !== index));
-      };
-    
-      const handleChange = (index: number, value: string) => {
-        // Mise à jour de la description du problème
-        const newFields = [...fields];
-        newFields[index] = { ...newFields[index], item: value};
-        setFields(newFields);
-      };
+        setFields([...fields, ""]);
+    };
 
-    
+    const removeField = (index: number) => {
+        const newFields = fields.filter((_, i) => i !== index);
+        setFields(newFields);
+        handleChange(newFields);
+    };
+
+    const handleFieldChange = (index: number, value: string) => {
+        const newFields = [...fields];
+        newFields[index] = value;
+        setFields(newFields);
+        handleChange(newFields);
+    };
 
     return (
         <DashboardSection>
@@ -42,12 +42,12 @@ export default function WhatYouLearnModule({whatYouLearn}: {whatYouLearn?: WhatY
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Se présenter lors d'un entretien d'embauche"
                             required
-                            value={field.item}
-                            onChange={(e) => handleChange(index, e.target.value)} 
+                            value={field}
+                            onChange={(e) => handleFieldChange(index, e.target.value)}
                         />
                         <button
                             type="button"
-                            onClick={() => removeField(index)} 
+                            onClick={() => removeField(index)}
                         >
                             <CiSquareMinus size={40} className='text-secondary' />
                         </button>
@@ -55,13 +55,13 @@ export default function WhatYouLearnModule({whatYouLearn}: {whatYouLearn?: WhatY
                 ))}
                 <button
                     type="button"
-                    onClick={addField} 
-                    className="flex items-center gap-2 mt-4" 
+                    onClick={addField}
+                    className="flex items-center gap-2 mt-4"
                 >
                     <CiSquarePlus size={40} className='text-secondary' />
                     <span className="text-sm font-medium text-gray-900 dark:text-white">Ajouter un item</span>
                 </button>
             </div>
         </DashboardSection>
-    )
+    );
 }
