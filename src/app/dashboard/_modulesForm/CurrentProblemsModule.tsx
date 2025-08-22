@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import { CiSquareMinus, CiSquarePlus } from 'react-icons/ci';
 
 interface ProblemObject {
-    id: number;
     problem: string;
 }
 
@@ -17,13 +16,12 @@ export default function CurrentProblemsModule({currentProblems, handleChange}: C
     const [fields, setFields] = useState<ProblemObject[]>(() => {
         if (!Array.isArray(currentProblems)) return [];
         return currentProblems.map(problem => ({
-            id: problem.id,
             problem: typeof problem === 'string' ? problem : problem.problem
         }));
     });
 
     const addField = () => {
-        const newFields = [...fields, { id: fields.length + 1, problem: "" }];
+        const newFields = [...fields, { problem: "" }];
         setFields(newFields);
         handleChange(newFields);
     };
@@ -36,7 +34,7 @@ export default function CurrentProblemsModule({currentProblems, handleChange}: C
     
     const handleFieldChange = (index: number, value: string) => {
         const newFields = [...fields];
-        newFields[index] = { id: newFields[index].id, problem: value };
+        newFields[index] = { problem: value };
         setFields(newFields);
         handleChange(newFields);
     };
@@ -50,7 +48,6 @@ export default function CurrentProblemsModule({currentProblems, handleChange}: C
                 </label>
                 {fields.map((field, index) => (
                     <div key={index} className='flex items-center gap-8 my-2'>
-                        <div className='w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center'>{field.id}</div>
                         <input
                             type="text"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
