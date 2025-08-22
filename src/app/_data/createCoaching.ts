@@ -39,16 +39,14 @@ export async function createCoaching(request: {
             promotion_time: request.promotionTime || null,
             current_problems: request.currentProblems,
             gains: request.gains,
-            content: request.content,
+            includes: request.content,
             is_active: true
         })
     });
 
-    const data = await res.json();
-
     if (!res.ok) {
-        throw new Error(JSON.stringify(data));
+        throw new Error(res.statusText);
     }
 
-    return data;
+    return res;
 }

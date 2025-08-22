@@ -15,6 +15,7 @@ import { updateCoaching } from '@/app/_data/updateCoaching';
 import { notFound } from 'next/navigation';
 
 interface ProblemObject {
+  id: number;
   problem: string;
 }
 
@@ -46,6 +47,7 @@ export default function EditCoachingPage({ params }: { params: { id: number }}) 
   const router = useRouter();
   const [coaching, setCoaching] = useState<Coaching | null>(null);
   const [loading, setLoading] = useState(true);
+  console.log(coaching);
 
   React.useEffect(() => {
     const loadCoaching = async () => {

@@ -12,7 +12,7 @@ export default function ReviewContener({profilePicture, username, job, review, p
             </div>
         </div>
         <p className='mt-8 md:w-3/4 text-justify'>{review}</p>
-        <p className='mt-8 text-sm text-gray-500 dark:text-gray-400 italic text-xs'>Avis laissé sur {productName}</p>
+        <p className='mt-8 text-gray-500 dark:text-gray-400 italic text-xs'>Avis laissé sur {productName}</p>
     </>
   )
 }

@@ -29,6 +29,5 @@ export async function fetchReviews(productId?: number): Promise<Review[]> {
     throw new Error('Erreur lors du chargement des avis');
   }
   const data = await res.json();
-  console.log('fetchReviews: Données reçues:', data);
   return data || [];
 } 
