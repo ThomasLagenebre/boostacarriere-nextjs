@@ -16,7 +16,7 @@ const config: Config = {
       colors: {
         'primary' : '#f6a2b9',
         'secondary' : '#62041b',
-        'light': '#F1F7FF'
+        'light': '#f9f3f4'
       },
       keyframes: {
         hide: {

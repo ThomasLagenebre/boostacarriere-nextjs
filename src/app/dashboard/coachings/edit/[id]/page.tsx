@@ -11,18 +11,35 @@ import GainsModule from '@/app/dashboard/_modulesForm/GainsModule';
 import ContentModule from '@/app/dashboard/_modulesForm/ContentModule';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import { updateCoaching } from '@/app/_data/updateCoaching';
+import { notFound } from 'next/navigation';
+
+interface ProblemObject {
+  problem: string;
+}
 
 interface Coaching {
   id: number;
   title: string;
   slogan: string;
-  description: string;
   picture: string;
-  price: string;
+  summary: string | null;
+  description: string;
+  shortDescription: string;
+  rate: number | null;
+  price: number;
+  isActive: boolean;
+  slug: string;
   promotion: number;
-  currentProblems: any[];
+  category: {
+    id: number;
+    name: string;
+  };
+  currentProblems: ProblemObject[];
   gains: any[];
   includes: any[];
+  numberOfReviews: number;
+  reviews: any[];
 }
 
 export default function EditCoachingPage({ params }: { params: { id: number }}) {
@@ -33,8 +50,12 @@ export default function EditCoachingPage({ params }: { params: { id: number }}) 
   React.useEffect(() => {
     const loadCoaching = async () => {
       try {
-        const response = await fetchCoachingById(params.id);
-        setCoaching(response);
+        const coaching = await fetchCoachingById(params.id);
+        
+        if (!coaching) {
+          return notFound();
+        }
+        setCoaching(coaching);
       } catch (error) {
         console.error('Error loading coaching:', error);
       } finally {
@@ -49,30 +70,98 @@ export default function EditCoachingPage({ params }: { params: { id: number }}) 
     e.preventDefault();
     if (!coaching) return;
 
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${params.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${Cookies.get('auth_token')}`
-        },
-        body: JSON.stringify(coaching)
-      });
+    console.log(coaching);
+    console.log("Je modifie le coaching");
 
-      if (response.ok) {
-        router.push('/dashboard/coachings');
-      } else {
-        throw new Error('Failed to update coaching');
-      }
+    try {
+      await updateCoaching(params.id, {
+        title: coaching.title,
+        slogan: coaching.slogan,
+        picture: coaching.picture,
+        description: coaching.description,
+        shortDescription: coaching.shortDescription,
+        price: Number(coaching.price),
+        promotion: coaching.promotion,
+        promotionTime: 20,
+        currentProblems: coaching.currentProblems.map(p => p.problem),
+        gains: coaching.gains,
+        includes: coaching.includes
+      });
+      router.push('/dashboard/coachings');
     } catch (error) {
       console.error('Error updating coaching:', error);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleFieldChange = (id: string, value: any) => {
     if (!coaching) return;
-    const { name, value } = e.target;
-    setCoaching(prev => prev ? { ...prev, [name]: value } : null);
+    const fieldMap: { [key: string]: string } = {
+      'title': 'title',
+      'slogan': 'slogan',
+      'shortDescription': 'shortDescription',
+      'description': 'description',
+      'price': 'price',
+      'promotion': 'promotion',
+      'promotionTime': 'promotionTime'
+    };
+    
+    if (fieldMap[id]) {
+      setCoaching(prev => prev ? { ...prev, [fieldMap[id]]: value } : null);
+    }
+  };
+
+  const handleGeneralModuleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (!coaching) return;
+    const { id, value } = e.target;
+    const fieldMap: { [key: string]: string } = {
+      'title': 'title',
+      'slogan': 'slogan',
+      'shortDescription': 'shortDescription',
+      'description': 'description'
+    };
+    
+    if (fieldMap[id]) {
+      handleFieldChange(fieldMap[id], value);
+    }
+  };
+
+  const handlePriceModuleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (!coaching) return;
+    const { id, value } = e.target;
+    const fieldMap: { [key: string]: string } = {
+      'price': 'price',
+      'promotion': 'promotion',
+      'promotionTime': 'promotionTime'
+    };
+    
+    if (fieldMap[id]) {
+      handleFieldChange(fieldMap[id], Number(value));
+    }
+  };
+
+  const handleCurrentProblemsModuleChange = (problems: ProblemObject[]) => {
+    if (!coaching) return;
+    setCoaching(prev => prev ? { ...prev, currentProblems: problems } : null);
+  };  
+
+  const handleGainsModuleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (!coaching) return;
+    try {
+      const parsedGains = JSON.parse(e.target.value);
+      setCoaching(prev => prev ? { ...prev, gains: parsedGains } : null);
+    } catch (error) {
+      console.error('Error parsing gains:', error);
+    }
+  };
+
+  const handleContentModuleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (!coaching) return;
+    try {
+      const parsedContent = JSON.parse(e.target.value);
+      setCoaching(prev => prev ? { ...prev, includes: parsedContent } : null);
+    } catch (error) {
+      console.error('Error parsing content:', error);
+    }
   };
 
   if (loading) return <div>Loading...</div>;
@@ -87,31 +176,33 @@ export default function EditCoachingPage({ params }: { params: { id: number }}) 
         <GeneralModule 
           title={coaching.title} 
           slogan={coaching.slogan} 
-          shortDescription={coaching.description} 
+          shortDescription={coaching.shortDescription} 
           description={coaching.description}
-          handleChange={handleChange}
+          handleChange={handleGeneralModuleChange}
         />
         <ImgModule 
           imgURL={coaching.picture}
-          handleChange={handleChange}
+          handleChange={handleGeneralModuleChange}
         />
-        <PriceModule 
-          price={coaching.price} 
+        <PriceModule  
+          price={Number(coaching.price)} 
           promotion={coaching.promotion} 
           promotionTime={20}
-          handleChange={handleChange}
+          handlePriceChange={handlePriceModuleChange}
+          handlePromotionChange={handlePriceModuleChange}
+          handlePromotionTimeChange={handlePriceModuleChange}
         />
         <CurrentProblemsModule 
           currentProblems={coaching.currentProblems}
-          handleChange={handleChange}
+          handleChange={handleCurrentProblemsModuleChange}
         />
         <GainsModule 
           gains={coaching.gains}
-          handleChange={handleChange}
+          handleChange={handleGainsModuleChange}
         />    
         <ContentModule 
           contents={coaching.includes}
-          handleChange={handleChange}
+          handleChange={handleContentModuleChange}
         />
         <button 
           type="submit"

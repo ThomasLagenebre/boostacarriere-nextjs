@@ -1,0 +1,21 @@
+
+# TODO
+
+X Stats des réseaux => ajouter logo en dessous
+X Ajouter la possibilité de modifier le statut d'un utilisateur et le désactiver
+X Retirer le CTA "Booster ma carrière" et ajouter le form pour la newsletter
+X Ajouter logo LinkedIn en bas de page
+X Revoir le module de connexion (hydration failed)
+X Bug d'affichage du calendrier (dépasse de son bloc)
+X Faire page de maintenance
+
+- Ajouter vidéo de présentation de la formation sur la landing
+- Retirer plan de la formation quand on est connecté et qu'on a acheté
+- Bug sur les coachings pendant le parcours d'achat, connexion requise alors que user déjà connecté (ebook)
+- Paramétrer calendrier pour bloquer 1 semaine à l'avance la prise de rendez vous
+- Checker l'envoi des mails à chaque event (connexion, inscription, achat, ...)
+- Gérer les mails (inscription, mot de passe oublié, validation d'email)
+- Retester la modification de coaching
+- Taille de l'image de prévisualisation des ebook plus haute
+- Inscription newsletter marche depuis le back mais pas depuis le front
+- Cacher adresse perso

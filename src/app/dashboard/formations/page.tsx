@@ -2,7 +2,6 @@ import React from 'react'
 import DashboardSection from '../_components/DashboardSection'
 import SectionTitle from '@/app/(landing)/prestations/_components/SectionTitle'
 import Button from '@/app/_global_components/Button'
-import ArrayAllCoachings from '../coachings/_components/ArrayAllCoachings'
 import ArrayAllFormations from './_components/ArrayAllFormations'
 
 export default function page() {

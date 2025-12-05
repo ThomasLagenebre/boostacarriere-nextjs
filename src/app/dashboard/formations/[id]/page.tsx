@@ -10,26 +10,20 @@ import GainsModule from '@/app/dashboard/_modulesForm/GainsModule';
 import ContentModule from '@/app/dashboard/_modulesForm/ContentModule';
 import PriceModule from '@/app/dashboard/_modulesForm/PriceModule';
 import ChaptersModule from '@/app/dashboard/_modulesForm/ChaptersModule';
+import { notFound } from 'next/navigation';
+import FormationPageClient from './FormationPageClient';
 
+interface FormationPageProps {
+  params: { id: number };
+}
 
-export default async function page({ params }: { params: { id: number }}) {
+export default async function FormationPage({ params }: FormationPageProps) {
   const response = await fetchCoachingById(params.id);
   const currentCoaching = await response;
     
-  console.log(currentCoaching);
+  if (!currentCoaching) {
+    return notFound();
+  }
   
-    return (
-        <div className='max-lg:px-4'>
-            <DashboardSection>
-                <SectionTitle title={`TITRE : ${currentCoaching.title}`} className='text-left'/>
-            </DashboardSection>
-            <form className='my-6'>
-                {/* <ImagesList /> */}
-                <GeneralModule title={currentCoaching.title} slogan={currentCoaching.slogan} shortDescription={currentCoaching.description} description={currentCoaching.description} slug={currentCoaching.slug}/>
-                <ImgModule imgURL={currentCoaching.picture}/>
-                <PriceModule price={currentCoaching.price} promotion={currentCoaching.promotion} promotionTime={20}/>
-                <GainsModule gains={currentCoaching.gains}/>
-                <ChaptersModule />
-            </form>
-        </div>
-    )}
+  return <FormationPageClient coaching={currentCoaching} />;
+}

@@ -8,14 +8,14 @@ import NavlinkDropdown from '../_components/NavlinkDropdown';
 import PrestationsNavbar from '../_components/PrestationsNavbar';
 import Image from 'next/image';
 import { useAuth } from '@/app/_context/AuthContext';
+import { logout } from '@/app/_data/auth';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScroll, setIsScroll] = useState(false);
   const [openUserMenu, setOpenUserMenu] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(false);
   
-  const { user, loading, logout } = useAuth();
+  const { user, loading} = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,12 +39,7 @@ function Header() {
         <a className='font-bold text-xl max-xl:text-center' href='/'>Boostacarriere</a>
         <ul className={`${!isOpen && 'max-lg:hidden'} max-lg:fixed top-8 left-0 w-1/2 lg:w-fit mx-auto bg-secondary z-50 max-lg:py-4 max-lg:px-4 flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-20 justify-center max-xl:mt-6`}>
           <NavLink onClick={() => setIsOpen(false)} link='/'>Accueil</NavLink>
-          <li>
-            <NavlinkDropdown onClick={() => setOpenDropdown(!openDropdown)} label='Prestations'/>
-              <div className={`z-10 ${!openDropdown ? "hidden" : "fixed"} font-normal bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`}>
-                  <PrestationsNavbar />
-              </div>
-          </li>
+          <NavLink onClick={() => setIsOpen(false)} link='/prestations'>Prestations</NavLink>
           {/* <NavLink onClick={() => setIsOpen(false)} link='/'>Blog</NavLink> */}
           {/* <NavLink onClick={() => setIsOpen(false)} link='/'>Entreprise<span className="bg-blue-100 text-blue-800 text-xs font-medium ms-4 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Bientôt</span></NavLink> */}
           
@@ -75,13 +70,10 @@ function Header() {
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
               <li>
-                <Link href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
+                <Link href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mon compte</Link>
               </li>
               <li>
-                <Link href="/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</Link>
-              </li>
-              <li>
-                <button onClick={logout} className="block w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</button>
+                <button onClick={logout} className="block w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Déconnexion</button>
               </li>
             </ul>
           </div>

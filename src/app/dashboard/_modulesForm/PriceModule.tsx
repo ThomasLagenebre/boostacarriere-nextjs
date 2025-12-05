@@ -2,52 +2,75 @@
 import DashboardSection from '@/app/dashboard/_components/DashboardSection'
 import React, { useState } from 'react'
 import Input from '../_components/Input';
+import { log } from 'console';
 
 interface PriceModuleProps {
-  price?: string;
+  price?: number;
   promotion?: number;
   promotionTime?: number;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handlePriceChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handlePromotionChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handlePromotionTimeChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-export default function PriceModule({price, promotion, promotionTime, handleChange}: PriceModuleProps) {
+export default function PriceModule({price, promotion, promotionTime, handlePriceChange, handlePromotionChange, handlePromotionTimeChange}: PriceModuleProps) {
     const [isUnlimited, setIsUnlimited] = useState<boolean>(promotionTime === null || promotionTime === undefined);
-    const [currentPromotion, setCurrentPromotion] = useState(promotion);
-
+    
 
     const handleCheckboxChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setIsUnlimited(e.target?.checked);
+        if (e.target?.checked) {
+            handlePromotionTimeChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
+        }
     };
     return (
         <DashboardSection>
           <h4 className="font-bold underline text-secondary mb-4">Prix et réductions</h4>
-          <Input
-            id="price"
-            value={price}
-            type="text"
-            placeholder="Prix"
-            label="Prix"
-            onChange={handleChange}
-            required
-          />
-          <Input
-            id="promotion"
-            value={currentPromotion}
-            type="number"
-            placeholder="Promotion"
-            label="Promotion (%)"
-            onChange={(newValue) => setCurrentPromotion(Number(newValue))}
-          />
-          {currentPromotion && currentPromotion > 0 && (
+          <div className="mb-4">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Prix
+            </label>
+            <input
+              type="number"
+              id="price"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Prix de la formation"
+              required
+              value={price}
+              onChange={handlePriceChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Promotion
+            </label>
+            <input
+              type="number"
+              id="promotion"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Promotion en pourcentage"
+              value={promotion}
+              onChange={handlePromotionChange}
+            />
+          </div>
+          {promotion !== undefined && promotion > 0 && (
             <div className="my-4">
-              <Input
-                id="promotionTime"
-                value={promotionTime}
-                type="number"
-                placeholder="Durée de la promotion"
-                label="Durée de la promotion (jours)"
-                onChange={handleChange}
-              />
+              {!isUnlimited && (
+                <div className="mb-4">
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Durée de la promotion (en jours)
+                  </label>
+                  <input
+                    type="number"
+                    id="promotionTime"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Durée de la promotion"
+                    value={promotionTime}
+                    onChange={handlePromotionTimeChange}
+                  />
+                </div>
+              )}
+              
               <label className="inline-flex items-center cursor-pointer">
                 <input
                   type="checkbox"

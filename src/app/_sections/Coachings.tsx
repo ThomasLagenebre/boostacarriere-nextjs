@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import CoachingsCard from '../_components/CoachingsCard'
 import { fetchAllCoachings } from '../_data/fetchAllCoachings';
 import { ICoaching } from '@/interface/ICoaching';
+import Skeleton from '../_global_components/Skeleton';
 
 
 export default function Coachings() {
@@ -27,7 +28,7 @@ export default function Coachings() {
   }, []);
 
   if (loading) {
-    return <p>Chargement des coachings...</p>;
+    return <Skeleton rows={2} columns={3} isTable={false} color='custom' customColor='bg-secondary dark:bg-primary' className='mt-32' />;
   }
 
   if (error) {

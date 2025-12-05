@@ -1,13 +1,27 @@
 import React from 'react'
-import ShadowSection from '../_components/ShadowSection'
 import SectionTitle from '../_components/SectionTitle'
 import Accordion from '../_components/Accordion'
+import ShadowSection from '../_components/ShadowSection'
 
-export default function Plan() {
+interface Chapter {
+  id: number;
+  title: string;
+  lessons: {
+    id: number;
+    title: string;
+    duration: number;
+  }[];
+}
+
+interface PlanProps {
+  chapters?: Chapter[];
+}
+
+export default function Plan({ chapters = [] }: PlanProps) {
   return (
     <ShadowSection>
-        <SectionTitle title='Le plan de la formation'/>
-        <Accordion />
+        <SectionTitle title="Plan de la formation"/>
+        <Accordion chapters={chapters} />
     </ShadowSection>
   )
 }

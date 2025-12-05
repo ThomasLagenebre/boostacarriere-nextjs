@@ -7,7 +7,7 @@ export default function Reviews() {
   return (
     <section className='my-32 max-md:px-4'>
       <SectionsHead title='Ils ont aimé' description='Découvre le témoignage des clients qui ont participés à un coaching, suivi une formation ou acheter un ebook.'/>
-      <ReviewsSlider />
+      <ReviewsSlider productId={undefined} />
       <SocialsStats />
     </section>
   )

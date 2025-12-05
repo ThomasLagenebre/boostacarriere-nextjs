@@ -1,4 +1,4 @@
-export async function paymentIntend(appointment: string, duration: number, name: string, email: string, productId: number, termsAccepted: boolean){
+export async function paymentIntend(appointment: string, duration: number, name: string, email: string, productId: number, termsAccepted: boolean, userId: number){
     if (!name || name.trim() === '') {
         throw new Error('Merci de renseigner ton nom complet');
     }
@@ -24,9 +24,10 @@ export async function paymentIntend(appointment: string, duration: number, name:
             appointment: appointment || null,
             duration: duration || null,
             name: name.trim(),
+            userId: userId,
             email: email.trim(),
             productId: Number(productId),
-            termsAccepted: Boolean(termsAccepted)
+            termsAccepted: true
         }),
     });
 
@@ -34,6 +35,5 @@ export async function paymentIntend(appointment: string, duration: number, name:
     if (!res.ok) {
         throw new Error(JSON.stringify(data));
     }
-
     return data
 }

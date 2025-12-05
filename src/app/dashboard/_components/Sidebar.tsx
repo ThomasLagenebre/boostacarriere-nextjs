@@ -1,26 +1,31 @@
 'use client';
 import { useAuth } from '@/app/_context/AuthContext';
-import Image from 'next/image'
 import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react'
-import { AiFillFileText } from 'react-icons/ai'
 import { FaBook, FaHome, FaUser } from 'react-icons/fa'
-import { GrArticle } from 'react-icons/gr'
 import { HiMenuAlt2 } from 'react-icons/hi'
 import { IoMdExit, IoMdSettings } from 'react-icons/io'
-import { MdVideoCall } from 'react-icons/md'
+import { MdOutlineEmail, MdVideoCall } from 'react-icons/md'
 import { PiStudentFill } from 'react-icons/pi'
 import { PermissionGuard } from '@/app/_components/PermissionGuard'
 import Link from 'next/link'
+import { IoSunny } from 'react-icons/io5';
+import { logout } from '@/app/_data/auth';
 
 export default function Sidebar() {
    const sidebarRef = useRef<HTMLDivElement>(null);
    const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
-   const { user, logout } = useAuth();
-   // Fonction pour basculer l'état de la sidebar
+   const { user} = useAuth();
+   const [isDark, setIsDark] = useState(() => {
+     if (typeof window !== 'undefined') {
+       return document.documentElement.classList.contains('dark');
+     }
+     return false;
+   });
+
    const toggleSidebar = () => setSidebarIsOpen(!sidebarIsOpen);
- 
+
+
    // Fermer la sidebar en cliquant à l'extérieur
    useEffect(() => {
      const handleClickOutside = (event: MouseEvent) => {
@@ -59,13 +64,7 @@ export default function Sidebar() {
             Boostacarriere
           </Link>
           <div className='flex items-center gap-4 my-6 lg:my-3 '>
-            <Image
-              src='https://firebasestorage.googleapis.com/v0/b/boostacarriere-2679a.appspot.com/o/files%2FIMG_0622.jpg?alt=media&token=0cd5f6df-f0e1-4fb4-af87-e612dd969c78'
-              alt='profile'
-              width={200}
-              height={200}
-              className='rounded-full object-cover w-12 h-12'
-            />
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             <div>
               <p className='font-semibold'>{user?.firstname} {user?.lastname}</p>
               <p className='text-xs'>{user?.role?.name === 'User' ? 'Utilisateur' : user?.role?.name === 'Admin' ? 'Administrateur' : 'Non spécifié'}</p>
@@ -93,8 +92,9 @@ export default function Sidebar() {
           </ul>
         </div>
         <div>
+          <button type='button' onClick={() => {document.body.classList.toggle("dark")}} className='flex w-full items-center bg-transparent gap-4 cursor-pointer border border-transparent hover:border-secondary hover:text-secondary text-secondary rounded-md p-2'><IoSunny /> Darkmode</button>
           <Link 
-            href="/settings" 
+            href="/dashboard/settings" 
             className='flex items-center gap-4 cursor-pointer border border-transparent hover:border-secondary text-secondary rounded-md p-2'
           >
             <IoMdSettings /> Paramètres
@@ -122,15 +122,27 @@ const SidebarItems = ({label, link, icon}: {label: string, link: string, icon: J
   const pathname = usePathname();
   const currentPath = pathname.replace("/dashboard", "");
   const isActive = currentPath === link.replace("/dashboard", "");
+  const isExternalLink = link.startsWith('http');
   
   return (
     <li>
-      <Link 
-        href={link} 
-        className={`flex items-center cursor-pointer gap-3 rounded-md p-2 hover:bg-light hover:shadow-lg ${isActive && "border shadow-lg"}`}
-      >
-        {icon}{label}
-      </Link>
+      {isExternalLink ? (
+        <a 
+          href={link} 
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`flex items-center cursor-pointer gap-3 rounded-md p-2 hover:bg-light hover:shadow-lg`}
+        >
+          {icon}{label}
+        </a>
+      ) : (
+        <Link 
+          href={link} 
+          className={`flex items-center cursor-pointer gap-3 rounded-md p-2 hover:bg-light hover:shadow-lg ${isActive && "border shadow-lg"}`}
+        >
+          {icon}{label}
+        </Link>
+      )}
     </li>
   )
 }
@@ -141,7 +153,7 @@ const DashboardPages = [
     label: 'Tableau de bord',
     link: '/dashboard',
     icon: <FaHome size={18}/>,
-    permission: 'all'
+    permission: 'view_dashboard'
   },
   {
     label: 'Coachings',
@@ -157,26 +169,21 @@ const DashboardPages = [
   },
   {
     label: 'Ebooks',
-    link: '/dashboard',
+    link: '/dashboard/ebooks',
     icon: <FaBook size={18}/>,
     permission: 'view_ebooks'
   },
   {
     label: 'Utilisateurs',
-    link: '/dashboard',
+    link: '/dashboard/users',
     icon: <FaUser size={18}/>,
     permission: 'view_users'
   },
   {
-    label: 'Blog',
-    link: '/dashboard',
-    icon: <GrArticle size={18}/>,
-    permission: 'view_blog'
-  },
-  {
-    label: 'Gestion du site',
-    link: '/dashboard',
-    icon: <AiFillFileText size={18}/>,
-    permission: 'manage_site'
-  },
+    label: 'Newsletter',
+    link: 'https://app.brevo.com/marketing-campaign/campaign-setup',
+    icon: <MdOutlineEmail size={18}/>,
+    permission: 'view_newsletter'
+  }
+
 ]

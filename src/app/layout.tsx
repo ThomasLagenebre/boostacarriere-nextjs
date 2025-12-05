@@ -3,6 +3,9 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import { AuthProvider } from '@/app/_context/AuthContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -25,6 +28,7 @@ export default function RootLayout({
         <AuthProvider>  
           {children}
         </AuthProvider>
+        <ToastContainer />
         <Script src="../path/to/flowbite/dist/flowbite.min.js"></Script>
       </body>
     </html>
